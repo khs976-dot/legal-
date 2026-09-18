@@ -1,0 +1,91 @@
+{
+  "identity": {
+    "nameAr": "المحامي خالد السميري",
+    "nameEn": "Lawyer Khaled Alsmairi",
+    "shortNameAr": "خالد السميري",
+    "shortNameEn": "Khaled Alsmairi",
+    "titleAr": "محامٍ ومدير مساعد للشؤون القانونية",
+    "titleEn": "Lawyer & Assistant Manager of Legal Affairs",
+    "organizationAr": "شركة عمار للتمويل والإيجار",
+    "organizationEn": "Amar Finance & Leasing Co.",
+    "locationAr": "مدينة الكويت، دولة الكويت",
+    "locationEn": "Kuwait City, State of Kuwait"
+  },
+  "hero": {
+    "eyebrowAr": "ملف مهني",
+    "eyebrowEn": "Professional profile",
+    "headlineAr": "المحامي خالد السميري",
+    "headlineEn": "Lawyer Khaled Alsmairi",
+    "subheadlineAr": "محامٍ ومدير مساعد للشؤون القانونية لدى شركة عمار للتمويل والإيجار في مدينة الكويت. يُعنى هذا الموقع بالتعريف المهني المؤسسي، وليس بتقديم استشارة قانونية.",
+    "subheadlineEn": "Lawyer and Assistant Manager of Legal Affairs at Amar Finance & Leasing Co. in Kuwait City. This website is a professional introduction, not a source of legal advice."
+  },
+  "bio": {
+    "shortAr": "يعمل المحامي خالد السميري في الشؤون القانونية المؤسسية بدولة الكويت، مع عناية بالمسائل التجارية والتمويلية والحوكمة والعقود. يقدّم هذا الملف تعريفاً مهنياً موجزاً، ويتيح التواصل بشأن الفرص في القطاع الخاص.",
+    "shortEn": "Lawyer Khaled Alsmairi works in institutional legal affairs in the State of Kuwait, with a focus on commercial, finance, governance, and contractual matters. This profile is a concise professional introduction and a channel for private-sector enquiries.",
+    "longAr": "يشغل المحامي خالد السميري منصب مدير مساعد للشؤون القانونية لدى شركة عمار للتمويل والإيجار في مدينة الكويت، إلى جانب صفته المهنية كمحامٍ.\n\nويُعنى عمله بالدعم القانوني للمؤسسة في بيئة تمويل وإيجار منظّمة، بما يشمل مراجعة الأطر التعاقدية، ومتابعة المتطلبات النظامية الداخلية، والتنسيق مع الوحدات المعنية بشأن المسائل القانونية ذات الصلة بنشاط الشركة.\n\nويهدف هذا الموقع إلى تقديم صورة مهنية واضحة باللغة العربية والإنجليزية، دون ادعاءات غير موثّقة ودون عرض قوائم عملاء أو جوائز أو أرقام قيد. وأي بيانات ترخيص أو عضوية مهنية تُستكمل لاحقاً من لوحة التحكم عند توفرها من مصدرها الرسمي.\n\nالتواصل عبر هذا الموقع مخصص للاستفسارات المهنية وفرص القطاع الخاص، ولا يُنشئ علاقة محامٍ بموكل، ولا يُعدّ قبولاً للوكالة أو تقديم استشارة.",
+    "longEn": "Lawyer Khaled Alsmairi serves as Assistant Manager of Legal Affairs at Amar Finance & Leasing Co. in Kuwait City, in addition to his standing as a lawyer.\n\nHis work supports the institution in a regulated finance and leasing environment. That includes contractual review, internal regulatory follow-up, and coordination with relevant units on legal matters connected to the company’s activity.\n\nThis website presents a clear bilingual professional profile. It does not list clients, awards, or licence numbers, and it does not make unverified claims. Admission or professional-membership details can be added later from the dashboard once they are available from an official source.\n\nContact through this site is intended for professional enquiries and private-sector opportunities. It does not create a lawyer–client relationship, constitute acceptance of a mandate, or amount to legal advice."
+  },
+  "practiceAreas": [
+    {
+      "id": "corporate-commercial",
+      "titleAr": "القانون التجاري والشركات",
+      "titleEn": "Corporate & commercial law",
+      "descriptionAr": "متابعة المسائل القانونية المتصلة بتكوين الشركات وتصريف أعمالها التجارية، في إطار مؤسسي ومنضبط.",
+      "descriptionEn": "Legal matters connected with corporate formation and the conduct of commercial affairs, approached in an institutional and disciplined manner."
+    },
+    {
+      "id": "finance-leasing",
+      "titleAr": "التمويل والإيجار",
+      "titleEn": "Finance & leasing",
+      "descriptionAr": "عناية بالجوانب القانونية لنشاط التمويل والإيجار، بما يتوافق مع طبيعة عمل المؤسسات المالية غير المصرفية في الكويت.",
+      "descriptionEn": "Legal aspects of finance and leasing activity, aligned with the work of non-bank financial institutions in Kuwait."
+    },
+    {
+      "id": "contracts",
+      "titleAr": "العقود والاتفاقيات",
+      "titleEn": "Contracts & agreements",
+      "descriptionAr": "صياغة العقود ومراجعتها والتفاوض على أحكامها بما يراعي الوضوح وتوزيع المخاطر والمصالح المؤسسية.",
+      "descriptionEn": "Drafting, reviewing, and negotiating agreements with attention to clarity, risk allocation, and institutional interests."
+    },
+    {
+      "id": "governance",
+      "titleAr": "الحوكمة والامتثال",
+      "titleEn": "Governance & compliance",
+      "descriptionAr": "دعم أطر الحوكمة الداخلية ومتابعة متطلبات الامتثال ذات الصلة بعمل الشؤون القانونية في المؤسسة.",
+      "descriptionEn": "Support for internal governance frameworks and compliance requirements relevant to in-house legal affairs."
+    },
+    {
+      "id": "regulatory",
+      "titleAr": "التنظيم والرقابة",
+      "titleEn": "Regulation & oversight",
+      "descriptionAr": "متابعة المسائل التنظيمية المتصلة بالقطاع المالي وأنشطة التمويل، دون إخلال بالطابع التعريفي لهذا الموقع.",
+      "descriptionEn": "Regulatory matters connected with the financial sector and financing activity, presented here for professional context only."
+    },
+    {
+      "id": "disputes",
+      "titleAr": "المنازعات التجارية",
+      "titleEn": "Commercial disputes",
+      "descriptionAr": "الإلمام بمسارات تسوية المنازعات التجارية على نحو مهني، من دون عرض نتائج قضايا أو ادعاء تمثيل عن عملاء.",
+      "descriptionEn": "Familiarity with commercial dispute-resolution paths, without publishing case outcomes or client representations."
+    }
+  ],
+  "contact": {
+    "email": "",
+    "phone": "",
+    "linkedin": "",
+    "addressAr": "مدينة الكويت، دولة الكويت",
+    "addressEn": "Kuwait City, State of Kuwait",
+    "formspreeEndpoint": ""
+  },
+  "social": {
+    "linkedin": "",
+    "x": "",
+    "website": ""
+  },
+  "cta": {
+    "labelAr": "التواصل المهني",
+    "labelEn": "Professional contact",
+    "textAr": "يُرحَّب بالاستفسارات المتعلقة بالفرص المهنية في القطاع الخاص. ولن يُعدّ المراسلة عبر هذا الموقع استشارة قانونية أو علاقة مهنية ملزمة.",
+    "textEn": "Enquiries concerning private-sector professional opportunities are welcome. Correspondence through this website does not constitute legal advice or a binding professional relationship."
+  }
+}

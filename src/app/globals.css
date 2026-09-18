@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+:root {
+  --navy: #0b1f3a;
+  --navy-deep: #071526;
+  --navy-mid: #143055;
+  --navy-soft: #1d3f6b;
+  --gold: #c4a35a;
+  --gold-light: #e0c57a;
+  --gold-pale: #f3e6c3;
+  --ivory: #f8f4eb;
+  --cream: #fffdf8;
+  --ink: #142033;
+  --muted: #5c6673;
+  --line: rgba(196, 163, 90, 0.35);
+  --background: var(--ivory);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-navy-mid: var(--navy-mid);
+  --color-navy-soft: var(--navy-soft);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-pale: var(--gold-pale);
+  --color-ivory: var(--ivory);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans-en);
+  --font-display: var(--font-display-en);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html[lang="ar"] body {
+  font-family: var(--font-arabic-sans), "IBM Plex Sans Arabic", sans-serif;
+}
+
+html[lang="en"] body {
+  font-family: var(--font-sans-en), "Source Sans 3", sans-serif;
+}
+
+html[lang="ar"] .font-display {
+  font-family: var(--font-arabic-serif), "Noto Naskh Arabic", serif;
+}
+
+html[lang="en"] .font-display {
+  font-family: var(--font-display-en), "Cormorant Garamond", serif;
+}
+
+body {
+  background: var(--ivory);
+  color: var(--ink);
+  min-height: 100%;
+}
+
+::selection {
+  background: var(--gold-pale);
+  color: var(--navy);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: 1rem;
+  top: -3rem;
+  z-index: 80;
+  background: var(--gold);
+  color: var(--navy-deep);
+  padding: 0.5rem 0.85rem;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ornament::before,
+.ornament::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(
+    to var(--ornament-dir, right),
+    transparent,
+    var(--gold)
+  );
+}
+
+html[lang="ar"] .ornament::before,
+html[lang="ar"] .ornament::after {
+  --ornament-dir: left;
+}
+
+.ornament-diamond {
+  width: 0.45rem;
+  height: 0.45rem;
+  background: var(--gold);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.hero-grid {
+  background-color: var(--navy-deep);
+  background-image:
+    linear-gradient(180deg, rgba(11, 31, 58, 0.2), rgba(7, 21, 38, 0.88)),
+    radial-gradient(circle at 20% 20%, rgba(196, 163, 90, 0.12), transparent 36%),
+    radial-gradient(circle at 80% 80%, rgba(20, 48, 85, 0.7), transparent 42%),
+    linear-gradient(rgba(196, 163, 90, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(196, 163, 90, 0.05) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    auto,
+    48px 48px,
+    48px 48px;
+}
+
+.prose-profile p + p {
+  margin-top: 1.15rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
