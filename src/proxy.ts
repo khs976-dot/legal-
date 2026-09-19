@@ -10,15 +10,16 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (
-    pathname.startsWith("/api") ||
-    pathname.startsWith("/admin")
-  ) {
-    const headers = new Headers(request.headers);
-    headers.set("x-locale", "en");
-    return NextResponse.next({
-      request: { headers },
+  if (pathname.startsWith("/api") || pathname.startsWith("/admin")) {
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-locale", "en");
+    const response = NextResponse.next({
+      request: { headers: requestHeaders },
     });
+    if (pathname.startsWith("/admin") || pathname.startsWith("/api/admin")) {
+      response.headers.set("X-Robots-Tag", "noindex, nofollow");
+    }
+    return response;
   }
 
   if (pathname === "/en" || pathname.startsWith("/en/")) {

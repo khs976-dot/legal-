@@ -26,12 +26,79 @@ export type ExperienceItem = {
   descriptionEn: string;
 };
 
+export type IntakeSubjectItem = {
+  id: string;
+  labelAr: string;
+  labelEn: string;
+};
+
+export const COPY_KEYS = [
+  "skipToContent",
+  "navHome",
+  "navAbout",
+  "navPractice",
+  "navContact",
+  "navAria",
+  "language",
+  "languageToggleArLabel",
+  "languageToggleEnLabel",
+  "openMenu",
+  "closeMenu",
+  "profileBadge",
+  "currentRole",
+  "locationLabel",
+  "practiceHeading",
+  "practiceIntro",
+  "viewAllPractice",
+  "aboutHeading",
+  "aboutLead",
+  "homeCtaSecondary",
+  "highlightsHeading",
+  "emptyHighlights",
+  "emptyPractice",
+  "glanceHeading",
+  "experienceHeading",
+  "educationHeading",
+  "membershipsHeading",
+  "languagesHeading",
+  "approachHeading",
+  "approachText",
+  "contactEmail",
+  "contactPhone",
+  "contactLinkedin",
+  "contactAddress",
+  "notProvided",
+  "intakeHeading",
+  "intakeIntro",
+  "formName",
+  "formSubject",
+  "formPhone",
+  "formSubmit",
+  "formMailtoHint",
+  "formSuccess",
+  "formCopy",
+  "formCopied",
+  "formError",
+  "required",
+  "disclaimer",
+  "footerRights",
+  "notFoundTitle",
+  "notFoundHome",
+] as const;
+
+export type CopyPairKey = (typeof COPY_KEYS)[number];
+
+export type SiteCopy = {
+  [K in CopyPairKey as `${K}Ar` | `${K}En`]: string;
+};
+
 export type SiteContent = {
   identity: {
     nameAr: string;
     nameEn: string;
     shortNameAr: string;
     shortNameEn: string;
+    monogram: string;
     titleAr: string;
     titleEn: string;
     organizationAr: string;
@@ -83,6 +150,8 @@ export type SiteContent = {
     textAr: string;
     textEn: string;
   };
+  intakeSubjects: IntakeSubjectItem[];
+  copy: SiteCopy;
 };
 
 export function isLocale(value: string): value is Locale {
@@ -96,4 +165,16 @@ export function pickLocalized<T extends Record<string, string>>(
   enKey: keyof T,
 ): string {
   return locale === "ar" ? record[arKey] : record[enKey];
+}
+
+export function ui(
+  content: SiteContent,
+  locale: Locale,
+  key: CopyPairKey,
+): string {
+  return locale === "ar" ? content.copy[`${key}Ar`] : content.copy[`${key}En`];
+}
+
+export function makeUi(content: SiteContent, locale: Locale) {
+  return (key: CopyPairKey) => ui(content, locale, key);
 }

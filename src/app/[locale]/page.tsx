@@ -2,9 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Ornament } from "@/components/Ornament";
 import { getContent } from "@/lib/content";
-import { getDictionary } from "@/lib/dictionary";
 import { localizedPath, parseLocaleParam } from "@/lib/i18n";
-import { isLocale } from "@/lib/types";
+import { isLocale, makeUi } from "@/lib/types";
 
 export default async function HomePage({
   params,
@@ -17,7 +16,7 @@ export default async function HomePage({
   }
   const locale = parseLocaleParam(rawLocale);
   const content = await getContent();
-  const t = getDictionary(locale);
+  const t = makeUi(content, locale);
   const highlights = content.practiceAreas.slice(0, 4);
 
   return (
@@ -61,7 +60,7 @@ export default async function HomePage({
               href={localizedPath(locale, "/about")}
               className="border border-gold/50 px-6 py-3 text-sm tracking-[0.12em] text-ivory uppercase hover:border-gold"
             >
-              {t.homeCtaSecondary}
+              {t("homeCtaSecondary")}
             </Link>
           </div>
         </div>
@@ -71,10 +70,10 @@ export default async function HomePage({
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1.1fr_0.9fr] md:px-8">
           <div>
             <p className="text-xs tracking-[0.24em] text-gold uppercase">
-              {t.profileBadge}
+              {t("profileBadge")}
             </p>
             <h2 className="font-display mt-4 text-3xl text-navy md:text-4xl">
-              {t.aboutHeading}
+              {t("aboutHeading")}
             </h2>
             <div className="mt-6 max-w-xs">
               <Ornament />
@@ -82,22 +81,26 @@ export default async function HomePage({
             <p className="mt-8 max-w-xl text-base leading-8 text-ink/85">
               {locale === "ar" ? content.bio.shortAr : content.bio.shortEn}
             </p>
-            <ul className="mt-8 grid gap-3 text-sm text-navy">
-              {content.highlights.map((item) => (
-                <li key={item.id} className="border-s-2 border-gold ps-3">
-                  <span className="font-medium">
-                    {locale === "ar" ? item.titleAr : item.titleEn}
-                  </span>
-                  <span className="mt-1 block text-ink/75">
-                    {locale === "ar" ? item.textAr : item.textEn}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            {content.highlights.length === 0 ? (
+              <p className="mt-8 text-sm text-muted">{t("emptyHighlights")}</p>
+            ) : (
+              <ul className="mt-8 grid gap-3 text-sm text-navy">
+                {content.highlights.map((item) => (
+                  <li key={item.id} className="border-s-2 border-gold ps-3">
+                    <span className="font-medium">
+                      {locale === "ar" ? item.titleAr : item.titleEn}
+                    </span>
+                    <span className="mt-1 block text-ink/75">
+                      {locale === "ar" ? item.textAr : item.textEn}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <aside className="border border-gold/30 bg-ivory p-8">
             <p className="text-xs tracking-[0.2em] text-gold uppercase">
-              {t.currentRole}
+              {t("currentRole")}
             </p>
             <p className="mt-3 font-display text-2xl text-navy">
               {locale === "ar"
@@ -123,34 +126,38 @@ export default async function HomePage({
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
               <h2 className="font-display text-3xl text-navy md:text-4xl">
-                {t.practiceHeading}
+                {t("practiceHeading")}
               </h2>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-muted">
-                {t.practiceIntro}
+                {t("practiceIntro")}
               </p>
             </div>
             <Link
               href={localizedPath(locale, "/practice")}
               className="text-sm tracking-[0.12em] text-navy uppercase underline decoration-gold decoration-2 underline-offset-6"
             >
-              {t.viewAllPractice}
+              {t("viewAllPractice")}
             </Link>
           </div>
-          <div className="mt-12 grid gap-5 md:grid-cols-2">
-            {highlights.map((area) => (
-              <article
-                key={area.id}
-                className="border border-navy/10 bg-cream p-7"
-              >
-                <h3 className="font-display text-2xl text-navy">
-                  {locale === "ar" ? area.titleAr : area.titleEn}
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-ink/80">
-                  {locale === "ar" ? area.descriptionAr : area.descriptionEn}
-                </p>
-              </article>
-            ))}
-          </div>
+          {highlights.length === 0 ? (
+            <p className="mt-12 text-sm text-muted">{t("emptyPractice")}</p>
+          ) : (
+            <div className="mt-12 grid gap-5 md:grid-cols-2">
+              {highlights.map((area) => (
+                <article
+                  key={area.id}
+                  className="border border-navy/10 bg-cream p-7"
+                >
+                  <h3 className="font-display text-2xl text-navy">
+                    {locale === "ar" ? area.titleAr : area.titleEn}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-ink/80">
+                    {locale === "ar" ? area.descriptionAr : area.descriptionEn}
+                  </p>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -167,7 +174,7 @@ export default async function HomePage({
               href={`${localizedPath(locale, "/contact")}#intake`}
               className="mt-8 inline-block bg-gold px-6 py-3 text-sm tracking-[0.12em] text-navy-deep uppercase"
             >
-              {t.navContact}
+              {t("navContact")}
             </Link>
           </div>
         </div>

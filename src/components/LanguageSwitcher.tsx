@@ -3,22 +3,25 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { switchLocalePath } from "@/lib/i18n";
-import type { Locale } from "@/lib/types";
+import { makeUi, type Locale, type SiteContent } from "@/lib/types";
 
 export function LanguageSwitcher({
   locale,
+  content,
   className = "",
 }: {
   locale: Locale;
+  content: SiteContent;
   className?: string;
 }) {
   const pathname = usePathname() || "/";
+  const t = makeUi(content, locale);
 
   return (
     <div
       className={`inline-flex items-center gap-1 rounded-full border border-gold/35 px-2 py-1 text-[0.72rem] tracking-[0.14em] uppercase ${className}`}
       role="navigation"
-      aria-label={locale === "ar" ? "اللغة" : "Language"}
+      aria-label={t("language")}
     >
       <Link
         href={switchLocalePath(pathname, "ar")}
@@ -30,7 +33,7 @@ export function LanguageSwitcher({
         }`}
         aria-current={locale === "ar" ? "true" : undefined}
       >
-        عربي
+        {t("languageToggleArLabel")}
       </Link>
       <Link
         href={switchLocalePath(pathname, "en")}
@@ -42,7 +45,7 @@ export function LanguageSwitcher({
         }`}
         aria-current={locale === "en" ? "true" : undefined}
       >
-        EN
+        {t("languageToggleEnLabel")}
       </Link>
     </div>
   );

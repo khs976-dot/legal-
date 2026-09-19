@@ -1,21 +1,22 @@
-export const INTAKE_SUBJECTS = [
-  { value: "consultation", ar: "استشارة", en: "Consultation" },
-  { value: "contract", ar: "صياغة عقد", en: "Contract drafting" },
-  { value: "claim", ar: "دعوى", en: "Lawsuit / claim" },
-] as const;
+import type { IntakeSubjectItem, SiteContent } from "./types";
 
-export type IntakeSubject = (typeof INTAKE_SUBJECTS)[number]["value"];
-
-export function isIntakeSubject(value: string): value is IntakeSubject {
-  return INTAKE_SUBJECTS.some((item) => item.value === value);
+export function subjectFromContent(
+  content: SiteContent,
+  id: string,
+): IntakeSubjectItem | undefined {
+  return content.intakeSubjects.find((item) => item.id === id);
 }
 
-export function subjectLabel(value: IntakeSubject, locale: "ar" | "en"): string {
-  const match = INTAKE_SUBJECTS.find((item) => item.value === value);
+export function subjectLabel(
+  content: SiteContent,
+  id: string,
+  locale: "ar" | "en",
+): string {
+  const match = subjectFromContent(content, id);
   if (!match) {
-    return value;
+    return id;
   }
-  return locale === "ar" ? match.ar : match.en;
+  return locale === "ar" ? match.labelAr : match.labelEn;
 }
 
 export function defaultContactEmail(): string {

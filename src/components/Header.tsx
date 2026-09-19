@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { getDictionary } from "@/lib/dictionary";
 import { localizedPath } from "@/lib/i18n";
-import type { Locale, SiteContent } from "@/lib/types";
+import { makeUi, type Locale, type SiteContent } from "@/lib/types";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
 type HeaderProps = {
@@ -14,15 +13,17 @@ type HeaderProps = {
 
 export function Header({ locale, content }: HeaderProps) {
   const [open, setOpen] = useState(false);
-  const t = getDictionary(locale);
+  const t = makeUi(content, locale);
   const name =
     locale === "ar" ? content.identity.shortNameAr : content.identity.shortNameEn;
+  const location =
+    locale === "ar" ? content.identity.locationAr : content.identity.locationEn;
 
   const links = [
-    { href: localizedPath(locale, "/"), label: t.navHome },
-    { href: localizedPath(locale, "/about"), label: t.navAbout },
-    { href: localizedPath(locale, "/practice"), label: t.navPractice },
-    { href: localizedPath(locale, "/contact"), label: t.navContact },
+    { href: localizedPath(locale, "/"), label: t("navHome") },
+    { href: localizedPath(locale, "/about"), label: t("navAbout") },
+    { href: localizedPath(locale, "/practice"), label: t("navPractice") },
+    { href: localizedPath(locale, "/contact"), label: t("navContact") },
   ];
 
   return (
@@ -33,17 +34,17 @@ export function Header({ locale, content }: HeaderProps) {
           className="flex items-center gap-3"
         >
           <span className="flex h-10 w-10 items-center justify-center border border-gold text-[0.7rem] font-semibold tracking-[0.16em] text-gold">
-            KA
+            {content.identity.monogram}
           </span>
           <span className="leading-tight">
             <span className="block font-display text-base md:text-lg">{name}</span>
             <span className="block text-[0.68rem] tracking-[0.16em] text-gold-pale uppercase">
-              {locale === "ar" ? "الكويت" : "Kuwait"}
+              {location}
             </span>
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-6 text-sm md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-6 text-sm md:flex" aria-label={t("navAria")}>
           {links.map((link) => (
             <Link
               key={link.href}
@@ -53,7 +54,7 @@ export function Header({ locale, content }: HeaderProps) {
               {link.label}
             </Link>
           ))}
-          <LanguageSwitcher locale={locale} />
+          <LanguageSwitcher locale={locale} content={content} />
         </nav>
 
         <button
@@ -63,7 +64,7 @@ export function Header({ locale, content }: HeaderProps) {
           aria-controls="mobile-nav"
           onClick={() => setOpen((value) => !value)}
         >
-          <span className="sr-only">{open ? t.closeMenu : t.openMenu}</span>
+          <span className="sr-only">{open ? t("closeMenu") : t("openMenu")}</span>
           <span aria-hidden="true" className="text-lg leading-none">
             {open ? "×" : "☰"}
           </span>
@@ -74,7 +75,7 @@ export function Header({ locale, content }: HeaderProps) {
         <nav
           id="mobile-nav"
           className="border-t border-gold/20 px-5 py-4 md:hidden"
-          aria-label="Primary"
+          aria-label={t("navAria")}
         >
           <div className="flex flex-col gap-3 text-base">
             {links.map((link) => (
@@ -87,7 +88,11 @@ export function Header({ locale, content }: HeaderProps) {
                 {link.label}
               </Link>
             ))}
-            <LanguageSwitcher locale={locale} className="mt-2 self-start" />
+            <LanguageSwitcher
+              locale={locale}
+              content={content}
+              className="mt-2 self-start"
+            />
           </div>
         </nav>
       ) : null}

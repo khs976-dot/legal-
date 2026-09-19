@@ -3,9 +3,8 @@ import { notFound } from "next/navigation";
 import { IntakeForm } from "@/components/IntakeForm";
 import { Ornament } from "@/components/Ornament";
 import { getContent } from "@/lib/content";
-import { getDictionary } from "@/lib/dictionary";
 import { parseLocaleParam } from "@/lib/i18n";
-import { isLocale } from "@/lib/types";
+import { isLocale, makeUi } from "@/lib/types";
 
 export async function generateMetadata({
   params,
@@ -14,8 +13,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale: rawLocale } = await params;
   const locale = parseLocaleParam(rawLocale);
+  const content = await getContent();
+  const t = makeUi(content, locale);
   return {
-    title: locale === "ar" ? "التواصل" : "Contact",
+    title: t("intakeHeading"),
   };
 }
 
@@ -34,7 +35,7 @@ export default async function ContactPage({
   }
   const locale = parseLocaleParam(rawLocale);
   const content = await getContent();
-  const t = getDictionary(locale);
+  const t = makeUi(content, locale);
   const linkedin = content.contact.linkedin || content.social.linkedin;
 
   return (
@@ -42,10 +43,10 @@ export default async function ContactPage({
       <section className="border-b border-gold/20 bg-cream">
         <div className="mx-auto max-w-6xl px-5 py-16 md:px-8">
           <h1 className="font-display text-4xl text-navy md:text-5xl">
-            {t.intakeHeading}
+            {t("intakeHeading")}
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-8 text-muted">
-            {t.intakeIntro}
+            {t("intakeIntro")}
           </p>
           <div className="mt-8 max-w-xs">
             <Ornament />
@@ -57,32 +58,32 @@ export default async function ContactPage({
           <div className="border border-gold/30 bg-cream p-7">
             <dl className="space-y-5 text-sm">
               <div>
-                <dt className="text-muted">{t.contactEmail}</dt>
+                <dt className="text-muted">{t("contactEmail")}</dt>
                 <dd className="mt-1 text-navy">
                   {content.contact.email ? (
                     <a href={`mailto:${content.contact.email}`}>
                       {content.contact.email}
                     </a>
                   ) : (
-                    t.notProvided
+                    t("notProvided")
                   )}
                 </dd>
               </div>
               <div>
-                <dt className="text-muted">{t.contactPhone}</dt>
+                <dt className="text-muted">{t("contactPhone")}</dt>
                 <dd className="mt-1 text-navy" dir="ltr">
                   {content.contact.phone ? (
                     <a href={`tel:${content.contact.phone.replace(/\s/g, "")}`}>
                       {content.contact.phone}
                     </a>
                   ) : (
-                    displayValue("", t.notProvided)
+                    t("notProvided")
                   )}
                 </dd>
               </div>
               {linkedin ? (
                 <div>
-                  <dt className="text-muted">{t.contactLinkedin}</dt>
+                  <dt className="text-muted">{t("contactLinkedin")}</dt>
                   <dd className="mt-1 text-navy">
                     <a href={linkedin} target="_blank" rel="noreferrer">
                       {linkedin}
@@ -91,11 +92,11 @@ export default async function ContactPage({
                 </div>
               ) : null}
               <div>
-                <dt className="text-muted">{t.contactAddress}</dt>
+                <dt className="text-muted">{t("contactAddress")}</dt>
                 <dd className="mt-1 text-navy">
                   {locale === "ar"
-                    ? displayValue(content.contact.addressAr, t.notProvided)
-                    : displayValue(content.contact.addressEn, t.notProvided)}
+                    ? displayValue(content.contact.addressAr, t("notProvided"))
+                    : displayValue(content.contact.addressEn, t("notProvided"))}
                 </dd>
               </div>
             </dl>
@@ -105,7 +106,7 @@ export default async function ContactPage({
           </p>
         </aside>
         <div className="border border-navy/10 bg-white p-7 md:p-10">
-          <IntakeForm locale={locale} />
+          <IntakeForm locale={locale} content={content} />
         </div>
       </section>
     </div>

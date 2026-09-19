@@ -1,12 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { getDictionary } from "@/lib/dictionary";
-import { INTAKE_SUBJECTS } from "@/lib/intake";
-import type { Locale } from "@/lib/types";
+import { makeUi, type Locale, type SiteContent } from "@/lib/types";
 
-export function IntakeForm({ locale }: { locale: Locale }) {
-  const t = getDictionary(locale);
+export function IntakeForm({
+  locale,
+  content,
+}: {
+  locale: Locale;
+  content: SiteContent;
+}) {
+  const t = makeUi(content, locale);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [pending, setPending] = useState(false);
   const [copyText, setCopyText] = useState("");
@@ -74,7 +78,7 @@ export function IntakeForm({ locale }: { locale: Locale }) {
     <form id="intake" onSubmit={onSubmit} className="grid gap-5">
       <div className="grid gap-2">
         <label htmlFor="name" className="text-sm font-medium text-navy">
-          {t.formName} <span className="text-gold">*</span>
+          {t("formName")} <span className="text-gold">{t("required")}</span>
         </label>
         <input
           id="name"
@@ -86,7 +90,7 @@ export function IntakeForm({ locale }: { locale: Locale }) {
       </div>
       <div className="grid gap-2">
         <label htmlFor="subject" className="text-sm font-medium text-navy">
-          {t.formSubject} <span className="text-gold">*</span>
+          {t("formSubject")} <span className="text-gold">{t("required")}</span>
         </label>
         <select
           id="subject"
@@ -96,18 +100,18 @@ export function IntakeForm({ locale }: { locale: Locale }) {
           className="border border-navy/15 bg-cream px-4 py-3 text-ink"
         >
           <option value="" disabled>
-            {t.formSubject}
+            {t("formSubject")}
           </option>
-          {INTAKE_SUBJECTS.map((item) => (
-            <option key={item.value} value={item.value}>
-              {locale === "ar" ? item.ar : item.en}
+          {content.intakeSubjects.map((item) => (
+            <option key={item.id} value={item.id}>
+              {locale === "ar" ? item.labelAr : item.labelEn}
             </option>
           ))}
         </select>
       </div>
       <div className="grid gap-2">
         <label htmlFor="phone" className="text-sm font-medium text-navy">
-          {t.formPhone} <span className="text-gold">*</span>
+          {t("formPhone")} <span className="text-gold">{t("required")}</span>
         </label>
         <input
           id="phone"
@@ -124,13 +128,13 @@ export function IntakeForm({ locale }: { locale: Locale }) {
         disabled={pending}
         className="justify-self-start bg-navy px-6 py-3 text-sm tracking-[0.12em] text-ivory uppercase transition-colors hover:bg-navy-mid disabled:opacity-60"
       >
-        {t.formSubmit}
+        {t("formSubmit")}
       </button>
-      <p className="text-sm text-muted">{t.formMailtoHint}</p>
+      <p className="text-sm text-muted">{t("formMailtoHint")}</p>
       {status === "success" ? (
         <div className="space-y-2">
           <p className="text-sm text-navy" role="status">
-            {t.formSuccess}
+            {t("formSuccess")}
           </p>
           {copyText ? (
             <button
@@ -138,14 +142,14 @@ export function IntakeForm({ locale }: { locale: Locale }) {
               onClick={copyAgain}
               className="text-sm text-navy underline decoration-gold underline-offset-4"
             >
-              {copied ? t.formCopied : t.formCopy}
+              {copied ? t("formCopied") : t("formCopy")}
             </button>
           ) : null}
         </div>
       ) : null}
       {status === "error" ? (
         <p className="text-sm text-red-800" role="alert">
-          {t.formError}
+          {t("formError")}
         </p>
       ) : null}
     </form>

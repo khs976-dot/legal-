@@ -20,9 +20,9 @@ This repository is for **review and preview only**. It is not a production go-li
 - **نبذة** — مسار مهني وتعليم وعضويات (بدون أسماء جهات عمل)
 - **مجالات العمل** — قائمة قابلة للتعديل
 - **لوحة الطلب** — الاسم، الموضوع (استشارة / صياغة عقد / دعوى)، رقم الهاتف
-- **لوحة التحكم** على `/admin`
+- **كل كلمة ظاهرة للزائر** قابلة للتعديل من لوحة خاصة (القوائم، العناوين، الأزرار، النموذج، التذييل)
 
-لا تُذكر أسماء شركات أو مكاتب على الصفحات العامة.
+لا تُذكر أسماء شركات أو مكاتب على الصفحات العامة. لوحة التعديل خاصة بك وليست رابطاً في الموقع.
 
 ### التشغيل للمراجعة محلياً
 
@@ -46,8 +46,8 @@ npm run dev
 
 - العربية: http://localhost:3000
 - English: http://localhost:3000/en
-- لوحة التحكم: http://localhost:3000/admin
 - لوحة الطلب: http://localhost:3000/contact#intake
+- التعديل الخاص (كلمة مرور فقط، بلا رابط عام): http://localhost:3000/admin
 
 ### استضافة لاحقاً (مجانية فقط، اختيارية)
 
@@ -72,8 +72,8 @@ npm run dev
 | --- | --- |
 | Arabic (default, RTL) | http://localhost:3000 |
 | English | http://localhost:3000/en |
-| Admin | http://localhost:3000/admin |
 | Intake form | http://localhost:3000/contact#intake |
+| Private editor (password; not linked publicly) | http://localhost:3000/admin |
 
 ### Free-tier only
 
@@ -82,7 +82,7 @@ npm run dev
 | Hosting | Vercel Hobby `*.vercel.app` (later, optional) | Hobby quotas; no paid domain required |
 | Intake email | `mailto:` + copy-to-clipboard by default | None |
 | Optional form API | Web3Forms or Formspree **free** | ~250 / ~50 submissions per month |
-| Admin / CMS | `/admin` writes `content/site.json` | None |
+| Private editor | Password-gated `/admin` writes `content/site.json`. No public nav/footer/sitemap link. | None |
 | Fonts | Google Fonts | None |
 | Analytics / stock images | None | — |
 
@@ -100,6 +100,8 @@ Delivery:
 Required env: `ADMIN_PASSWORD`.  
 Intake destination: `CONTACT_TO_EMAIL` (default `khs.976@outlook.com`).  
 Optional free form: `CONTACT_FORM_ENDPOINT`, `CONTACT_FORM_ACCESS_KEY`.
+
+Every visitor-facing word (nav, headings, buttons, form labels, footer, language toggle, empty/success messages) lives in `content/site.json` and is edited from the private dashboard. There is no public link to `/admin`.
 
 ### Stack
 

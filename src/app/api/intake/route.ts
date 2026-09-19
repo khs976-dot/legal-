@@ -1,10 +1,6 @@
 import { NextResponse } from "next/server";
 import { getContent } from "@/lib/content";
-import {
-  defaultContactEmail,
-  isIntakeSubject,
-  subjectLabel,
-} from "@/lib/intake";
+import { defaultContactEmail, subjectFromContent, subjectLabel } from "@/lib/intake";
 
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as {
@@ -16,20 +12,20 @@ export async function POST(request: Request) {
   const name = body?.name?.trim() ?? "";
   const phone = body?.phone?.trim() ?? "";
   const subject = body?.subject?.trim() ?? "";
+  const content = await getContent();
 
-  if (!name || !phone || !isIntakeSubject(subject)) {
+  if (!name || !phone || !subjectFromContent(content, subject)) {
     return NextResponse.json(
       { error: "Name, subject, and phone are required." },
       { status: 400 },
     );
   }
 
-  const content = await getContent();
   const to =
     process.env.CONTACT_TO_EMAIL?.trim() ||
     content.contact.email.trim() ||
     defaultContactEmail();
-  const subjectAr = subjectLabel(subject, "ar");
+  const subjectAr = subjectLabel(content, subject, "ar");
   const emailSubject = `[طلب موقع] ${subjectAr} — ${name}`;
   const emailBody = [
     `الاسم: ${name}`,
@@ -37,7 +33,7 @@ export async function POST(request: Request) {
     `رقم الهاتف: ${phone}`,
     "",
     `Name: ${name}`,
-    `Subject: ${subjectLabel(subject, "en")}`,
+    `Subject: ${subjectLabel(content, subject, "en")}`,
     `Phone: ${phone}`,
   ].join("\n");
 

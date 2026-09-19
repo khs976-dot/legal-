@@ -2,9 +2,8 @@ import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { getContent } from "@/lib/content";
-import { getDictionary } from "@/lib/dictionary";
 import { parseLocaleParam } from "@/lib/i18n";
-import { isLocale } from "@/lib/types";
+import { isLocale, makeUi } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -25,12 +24,12 @@ export default async function LocaleLayout({
   }
   const locale = parseLocaleParam(rawLocale);
   const content = await getContent();
-  const t = getDictionary(locale);
+  const t = makeUi(content, locale);
 
   return (
     <>
       <a href="#content" className="skip-link">
-        {t.skipToContent}
+        {t("skipToContent")}
       </a>
       <Header locale={locale} content={content} />
       <main id="content" className="flex-1">
