@@ -52,7 +52,7 @@ export default async function HomePage({
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <Link
-              href={localizedPath(locale, "/contact")}
+              href={`${localizedPath(locale, "/contact")}#intake`}
               className="bg-gold px-6 py-3 text-sm tracking-[0.12em] text-navy-deep uppercase"
             >
               {locale === "ar" ? content.cta.labelAr : content.cta.labelEn}
@@ -152,7 +152,7 @@ export default async function HomePage({
               {locale === "ar" ? content.cta.textAr : content.cta.textEn}
             </p>
             <Link
-              href={localizedPath(locale, "/contact")}
+              href={`${localizedPath(locale, "/contact")}#intake`}
               className="mt-8 inline-block bg-gold px-6 py-3 text-sm tracking-[0.12em] text-navy-deep uppercase"
             >
               {t.navContact}

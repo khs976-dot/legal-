@@ -2,7 +2,7 @@
   "name": "khaled-alsmairi-profile",
   "version": "1.0.0",
   "private": true,
-  "description": "Bilingual professional profile website for Lawyer Khaled Alsmairi (Kuwait), with a password-protected content dashboard.",
+  "description": "Bilingual professional profile website for Khaled AlSmairi (Kuwait), with a password-protected content dashboard.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -8,6 +8,16 @@ export type PracticeArea = {
   descriptionEn: string;
 };
 
+export type ExperienceItem = {
+  id: string;
+  periodAr: string;
+  periodEn: string;
+  titleAr: string;
+  titleEn: string;
+  descriptionAr: string;
+  descriptionEn: string;
+};
+
 export type SiteContent = {
   identity: {
     nameAr: string;
@@ -36,6 +46,15 @@ export type SiteContent = {
     longEn: string;
   };
   practiceAreas: PracticeArea[];
+  experience: ExperienceItem[];
+  credentials: {
+    educationAr: string;
+    educationEn: string;
+    membershipsAr: string;
+    membershipsEn: string;
+    languagesAr: string;
+    languagesEn: string;
+  };
   contact: {
     email: string;
     phone: string;

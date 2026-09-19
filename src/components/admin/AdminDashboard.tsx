@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { PersistMode } from "@/lib/content";
-import type { PracticeArea, SiteContent } from "@/lib/types";
+import type { ExperienceItem, PracticeArea, SiteContent } from "@/lib/types";
 
 type AdminDashboardProps = {
   initialContent: SiteContent;
@@ -15,6 +15,8 @@ type SectionId =
   | "identity"
   | "hero"
   | "bio"
+  | "experience"
+  | "credentials"
   | "practice"
   | "contact"
   | "cta";
@@ -23,6 +25,8 @@ const sections: { id: SectionId; label: string }[] = [
   { id: "identity", label: "Name & titles" },
   { id: "hero", label: "Hero text" },
   { id: "bio", label: "Biography" },
+  { id: "experience", label: "Professional path" },
+  { id: "credentials", label: "Education & memberships" },
   { id: "practice", label: "Practice areas" },
   { id: "contact", label: "Contact & social" },
   { id: "cta", label: "Call to action" },
@@ -118,6 +122,40 @@ export function AdminDashboard({
       practiceAreas: current.practiceAreas.map((area, i) =>
         i === index ? { ...area, ...patch } : area,
       ),
+    }));
+  }
+
+  function updateExperience(index: number, patch: Partial<ExperienceItem>) {
+    setContent((current) => ({
+      ...current,
+      experience: current.experience.map((item, i) =>
+        i === index ? { ...item, ...patch } : item,
+      ),
+    }));
+  }
+
+  function addExperience() {
+    setContent((current) => ({
+      ...current,
+      experience: [
+        ...current.experience,
+        {
+          id: `role-${crypto.randomUUID()}`,
+          periodAr: "",
+          periodEn: "",
+          titleAr: "",
+          titleEn: "",
+          descriptionAr: "",
+          descriptionEn: "",
+        },
+      ],
+    }));
+  }
+
+  function removeExperience(index: number) {
+    setContent((current) => ({
+      ...current,
+      experience: current.experience.filter((_, i) => i !== index),
     }));
   }
 
@@ -399,6 +437,181 @@ export function AdminDashboard({
                 value={content.bio.longEn}
                 onChange={(value) => updateBio("longEn", value)}
                 multiline
+              />
+            </section>
+          ) : null}
+
+          {section === "experience" ? (
+            <section className="grid gap-4">
+              <div className="flex items-center justify-between">
+                <h2 className="font-display text-2xl text-navy">
+                  Professional path
+                </h2>
+                <button
+                  type="button"
+                  onClick={addExperience}
+                  className="bg-navy px-3 py-2 text-sm text-ivory"
+                >
+                  Add role
+                </button>
+              </div>
+              <p className="text-sm text-muted">
+                Describe roles by function and sector. Do not name employers or
+                firms.
+              </p>
+              {content.experience.map((item, index) => (
+                <article key={item.id} className="grid gap-3 bg-white p-5">
+                  <div className="flex justify-between">
+                    <p className="text-sm text-muted">Role {index + 1}</p>
+                    <button
+                      type="button"
+                      onClick={() => removeExperience(index)}
+                      className="border border-red-300 px-2 py-1 text-xs text-red-800"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                  <Field
+                    label="الفترة (عربي)"
+                    value={item.periodAr}
+                    onChange={(value) =>
+                      updateExperience(index, { periodAr: value })
+                    }
+                    dir="rtl"
+                  />
+                  <Field
+                    label="Period (English)"
+                    value={item.periodEn}
+                    onChange={(value) =>
+                      updateExperience(index, { periodEn: value })
+                    }
+                  />
+                  <Field
+                    label="المسمى (عربي)"
+                    value={item.titleAr}
+                    onChange={(value) =>
+                      updateExperience(index, { titleAr: value })
+                    }
+                    dir="rtl"
+                  />
+                  <Field
+                    label="Title (English)"
+                    value={item.titleEn}
+                    onChange={(value) =>
+                      updateExperience(index, { titleEn: value })
+                    }
+                  />
+                  <Field
+                    label="الوصف (عربي)"
+                    value={item.descriptionAr}
+                    onChange={(value) =>
+                      updateExperience(index, { descriptionAr: value })
+                    }
+                    multiline
+                    dir="rtl"
+                  />
+                  <Field
+                    label="Description (English)"
+                    value={item.descriptionEn}
+                    onChange={(value) =>
+                      updateExperience(index, { descriptionEn: value })
+                    }
+                    multiline
+                  />
+                </article>
+              ))}
+            </section>
+          ) : null}
+
+          {section === "credentials" ? (
+            <section className="grid gap-4 bg-white p-6">
+              <h2 className="font-display text-2xl text-navy">
+                Education & memberships
+              </h2>
+              <Field
+                label="التعليم (عربي)"
+                value={content.credentials.educationAr}
+                onChange={(value) =>
+                  setContent((current) => ({
+                    ...current,
+                    credentials: {
+                      ...current.credentials,
+                      educationAr: value,
+                    },
+                  }))
+                }
+                multiline
+                dir="rtl"
+              />
+              <Field
+                label="Education (English)"
+                value={content.credentials.educationEn}
+                onChange={(value) =>
+                  setContent((current) => ({
+                    ...current,
+                    credentials: {
+                      ...current.credentials,
+                      educationEn: value,
+                    },
+                  }))
+                }
+                multiline
+              />
+              <Field
+                label="العضويات (عربي)"
+                value={content.credentials.membershipsAr}
+                onChange={(value) =>
+                  setContent((current) => ({
+                    ...current,
+                    credentials: {
+                      ...current.credentials,
+                      membershipsAr: value,
+                    },
+                  }))
+                }
+                multiline
+                dir="rtl"
+              />
+              <Field
+                label="Memberships (English)"
+                value={content.credentials.membershipsEn}
+                onChange={(value) =>
+                  setContent((current) => ({
+                    ...current,
+                    credentials: {
+                      ...current.credentials,
+                      membershipsEn: value,
+                    },
+                  }))
+                }
+                multiline
+              />
+              <Field
+                label="اللغات (عربي)"
+                value={content.credentials.languagesAr}
+                onChange={(value) =>
+                  setContent((current) => ({
+                    ...current,
+                    credentials: {
+                      ...current.credentials,
+                      languagesAr: value,
+                    },
+                  }))
+                }
+                dir="rtl"
+              />
+              <Field
+                label="Languages (English)"
+                value={content.credentials.languagesEn}
+                onChange={(value) =>
+                  setContent((current) => ({
+                    ...current,
+                    credentials: {
+                      ...current.credentials,
+                      languagesEn: value,
+                    },
+                  }))
+                }
               />
             </section>
           ) : null}

@@ -1,92 +1,30 @@
-# المحامي خالد السميري / Lawyer Khaled Alsmairi
+# خالد السميري / Khaled AlSmairi
 
-موقع تعريفي مهني ثنائي اللغة (العربية أولاً مع اتجاه RTL، والإنجليزية) للمحامي خالد السميري، مدير مساعد للشؤون القانونية لدى شركة عمار للتمويل والإيجار في مدينة الكويت.
+موقع تعريفي مهني ثنائي اللغة (العربية أولاً مع اتجاه RTL، والإنجليزية) للمحامي خالد السميري في دولة الكويت. التركيز: الاستثمار والمعاملات والخدمات المالية.
 
-A bilingual professional profile site (Arabic first / RTL, plus English) for Lawyer Khaled Alsmairi, Assistant Manager of Legal Affairs at Amar Finance & Leasing Co., Kuwait City.
+A bilingual professional profile (Arabic first / RTL, plus English) for Khaled AlSmairi, Kuwait. Focus: investment, transactions, and financial-services legal work.
 
 The site is informational. It is **not legal advice**.
+
+This repository is prepared for **review and preview only**. It is not a production go-live.
+
+The stack is **free-tier only**: no paid hosting plans, no paid CMS, no paid form products required, no paid fonts or analytics.
 
 ---
 
 ## العربية
 
-### ماذا يتضمن الموقع
+### الصفحات
 
-- **الرئيسية** — مقدمة، نبذة قصيرة، مجالات مختارة، ودعوة للتواصل
-- **نبذة** — تعريف مهني أطول وبطاقة تعريف
-- **مجالات العمل** — قائمة قابلة للتعديل من لوحة التحكم
-- **التواصل** — نموذج جاهز لـ mailto أو [Formspree](https://formspree.io)
-- **لوحة التحكم** على `/admin` لتعديل الاسم والمسميات والنبذة ومجالات العمل وبيانات التواصل دون فتح الشفرة
+- **الرئيسية** — مقدمة، نبذة، مجالات مختارة، ودعوة إلى لوحة الطلب
+- **نبذة** — مسار مهني وتعليم وعضويات (بدون أسماء جهات عمل)
+- **مجالات العمل** — قائمة قابلة للتعديل
+- **لوحة الطلب** — الاسم، الموضوع (استشارة / صياغة عقد / دعوى)، رقم الهاتف
+- **لوحة التحكم** على `/admin`
 
-### التشغيل محلياً
+لا تُذكر أسماء شركات أو مكاتب على الصفحات العامة.
 
-يتطلب Node.js 20 أو أحدث.
-
-```bash
-npm install
-cp .env.example .env.local
-```
-
-عدّل `.env.local` وضَع كلمة مرور حقيقية:
-
-```
-ADMIN_PASSWORD=choose-a-strong-password
-```
-
-ثم:
-
-```bash
-npm run dev
-```
-
-- الموقع العربي: [http://localhost:3000](http://localhost:3000)
-- English: [http://localhost:3000/en](http://localhost:3000/en)
-- لوحة التحكم: [http://localhost:3000/admin](http://localhost:3000/admin)
-
-بعد حفظ التعديلات في `/admin` تُكتب إلى `content/site.json` وتظهر فوراً في الصفحات العامة.
-
-### النشر المجاني على نطاق فرعي من Vercel
-
-1. ادفع المشروع إلى GitHub.
-2. ادخل إلى [vercel.com](https://vercel.com) وسجّل بحساب GitHub (الخطة المجانية كافية).
-3. **Add New Project** → اختر هذا المستودع.
-4. Framework Preset: **Next.js** (يُكتشف تلقائياً).
-5. في **Environment Variables** أضف:
-   - `ADMIN_PASSWORD` = كلمة مرور قوية
-   - `NEXT_PUBLIC_SITE_URL` = `https://your-project.vercel.app` (بعد أول نشر يمكن تحديثه)
-6. اضغط **Deploy**.
-7. ستحصل على رابط مجاني بالشكل: `https://legal-xxxx.vercel.app`.
-
-لا تضع كلمة مرور لوحة التحكم داخل المستودع.
-
-### ربط نطاق .com لاحقاً
-
-في مشروع Vercel: **Settings → Domains** → أضف `www.yourdomain.com` واتبع تعليمات DNS. بعد الربط حدّث `NEXT_PUBLIC_SITE_URL`.
-
-### تعديل المحتوى على الموقع المنشور
-
-قرص Vercel للقراءة فقط. لذلك:
-
-- **الأسهل:** عدّل محلياً عبر `/admin`، ثم ارفع ملف `content/site.json` المحدَّث وأعد النشر؛ أو
-- **اختياري للتحرير المباشر على الموقع الحي:** أضف `GITHUB_TOKEN` و`GITHUB_REPO` و`GITHUB_BRANCH` حتى تُحفظ التعديلات كـ commit في GitHub ويعيد Vercel النشر.
-
-### تنبيه
-
-المحتوى الابتدائي تعريفي فقط. لا تُدرج أرقام قيد أو رخص أو جوائز أو قوائم عملاء غير موثّقة.
-
----
-
-## English
-
-### Pages
-
-- **Home** — hero, short bio, practice highlights, contact CTA
-- **About** — longer professional background
-- **Practice** — editable focus areas
-- **Contact** — form UI with mailto, or Formspree if an endpoint is set
-- **Dashboard** at `/admin` — simple forms for name, titles, bilingual bios, practice areas, contact details, hero text, and social links
-
-### Run locally
+### التشغيل للمراجعة محلياً
 
 Node.js 20+.
 
@@ -95,13 +33,49 @@ npm install
 cp .env.example .env.local
 ```
 
-Set a real password in `.env.local`:
+في `.env.local`:
 
 ```
 ADMIN_PASSWORD=choose-a-strong-password
+CONTACT_TO_EMAIL=khs.976@outlook.com
 ```
 
 ```bash
+npm run dev
+```
+
+- العربية: http://localhost:3000
+- English: http://localhost:3000/en
+- لوحة التحكم: http://localhost:3000/admin
+- لوحة الطلب: http://localhost:3000/contact#intake
+
+### النشر لاحقاً (اختياري، مجاني فقط)
+
+عند الرغبة في معاينة عامة لاحقاً — وليس الآن — يمكن استخدام **Vercel Hobby** المجاني (`*.vercel.app`) دون بطاقة ائتمان. لا يُشترط نطاق مدفوع.
+
+1. اربط المستودع بـ Vercel (الخطة المجانية).
+2. أضف `ADMIN_PASSWORD` و`CONTACT_TO_EMAIL`.
+3. اختياري للنماذج دون فتح برنامج البريد: **Web3Forms** المجاني (250 طلباً/شهر تقريباً) عبر `CONTACT_FORM_ENDPOINT` و`CONTACT_FORM_ACCESS_KEY`.
+
+لا يُنصح بأي ترقية مدفوعة.
+
+---
+
+## English
+
+### Pages
+
+- Home, About, Practice, Contact (intake panel)
+- `/admin` dashboard edits `content/site.json`
+
+Employer and law-firm names are omitted on purpose. Roles are described by function, sector, and years.
+
+### Preview locally
+
+```bash
+npm install
+cp .env.example .env.local
+# set ADMIN_PASSWORD
 npm run dev
 ```
 
@@ -110,38 +84,28 @@ npm run dev
 | Arabic (default, RTL) | http://localhost:3000 |
 | English | http://localhost:3000/en |
 | Admin | http://localhost:3000/admin |
+| Intake form | http://localhost:3000/contact#intake |
 
-`npm run build` then `npm run start` is the production-local check.
+Admin password is `ADMIN_PASSWORD`. Intake email target is `CONTACT_TO_EMAIL` (default `khs.976@outlook.com`).
 
-### Admin
+### Intake form (free)
 
-- Path: `/admin`
-- Password: the `ADMIN_PASSWORD` environment variable
-- If that variable is missing, sign-in is refused
-- Saving writes `content/site.json` (no code edits required)
+Fields: **name**, **subject** (Consultation / Contract drafting / Lawsuit), **phone**.
 
-### Free Vercel subdomain
+Delivery, in order:
 
-1. Push this repository to GitHub.
-2. Sign in at [vercel.com](https://vercel.com) with GitHub (Hobby / free tier).
-3. **Add New Project** and import the repo.
-4. Keep the Next.js preset.
-5. Add environment variables:
-   - `ADMIN_PASSWORD` — strong password
-   - `NEXT_PUBLIC_SITE_URL` — `https://your-project.vercel.app` after the first deploy
-6. Deploy. Vercel assigns a free `*.vercel.app` URL.
+1. If `CONTACT_FORM_ENDPOINT` is set (optional **Web3Forms** free key, or Formspree free endpoint), the server POSTs there.
+2. Otherwise the browser opens `mailto:khs.976@outlook.com` with subject `[طلب موقع] استشارة — Name`.
 
-Optional later:
+Free limits if you later add an endpoint: Web3Forms about 250 submissions/month; Formspree free about 50/month. Mailto has no quota. No paid plan is required.
 
-- **Formspree:** create a form, paste the endpoint into `/admin` → Contact.
-- **Custom domain:** Vercel → Settings → Domains, then update `NEXT_PUBLIC_SITE_URL`.
-- **Live admin persistence:** set `GITHUB_TOKEN` (contents write), `GITHUB_REPO` (e.g. `khs976-dot/legal-`), and `GITHUB_BRANCH`. The dashboard will commit `content/site.json`.
+### Later hosting (optional, free only)
 
-### Stack
+Vercel Hobby (`*.vercel.app`) is enough. Custom domains are optional and unused for this review. Do not enable paid add-ons.
 
-Next.js App Router, TypeScript, Tailwind CSS. Content lives in `content/site.json`.
+### Stack (all free)
 
-### Scripts
+Next.js App Router, TypeScript, Tailwind, Google Fonts, file-based JSON admin. No paid dependencies in `package.json`.
 
 ```bash
 npm run dev

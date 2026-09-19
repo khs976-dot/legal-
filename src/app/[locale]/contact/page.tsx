@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ContactForm } from "@/components/ContactForm";
+import { IntakeForm } from "@/components/IntakeForm";
 import { Ornament } from "@/components/Ornament";
 import { getContent } from "@/lib/content";
 import { getDictionary } from "@/lib/dictionary";
@@ -42,10 +42,10 @@ export default async function ContactPage({
       <section className="border-b border-gold/20 bg-cream">
         <div className="mx-auto max-w-6xl px-5 py-16 md:px-8">
           <h1 className="font-display text-4xl text-navy md:text-5xl">
-            {t.contactHeading}
+            {t.intakeHeading}
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-8 text-muted">
-            {t.contactIntro}
+            {t.intakeIntro}
           </p>
           <div className="mt-8 max-w-xs">
             <Ornament />
@@ -71,21 +71,25 @@ export default async function ContactPage({
               <div>
                 <dt className="text-muted">{t.contactPhone}</dt>
                 <dd className="mt-1 text-navy" dir="ltr">
-                  {displayValue(content.contact.phone, t.notProvided)}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-muted">{t.contactLinkedin}</dt>
-                <dd className="mt-1 text-navy">
-                  {linkedin ? (
-                    <a href={linkedin} target="_blank" rel="noreferrer">
-                      {linkedin}
+                  {content.contact.phone ? (
+                    <a href={`tel:${content.contact.phone.replace(/\s/g, "")}`}>
+                      {content.contact.phone}
                     </a>
                   ) : (
-                    t.notProvided
+                    displayValue("", t.notProvided)
                   )}
                 </dd>
               </div>
+              {linkedin ? (
+                <div>
+                  <dt className="text-muted">{t.contactLinkedin}</dt>
+                  <dd className="mt-1 text-navy">
+                    <a href={linkedin} target="_blank" rel="noreferrer">
+                      {linkedin}
+                    </a>
+                  </dd>
+                </div>
+              ) : null}
               <div>
                 <dt className="text-muted">{t.contactAddress}</dt>
                 <dd className="mt-1 text-navy">
@@ -101,7 +105,7 @@ export default async function ContactPage({
           </p>
         </aside>
         <div className="border border-navy/10 bg-white p-7 md:p-10">
-          <ContactForm locale={locale} content={content} />
+          <IntakeForm locale={locale} />
         </div>
       </section>
     </div>

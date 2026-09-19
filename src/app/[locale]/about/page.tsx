@@ -55,6 +55,24 @@ export default async function AboutPage({
             <p key={paragraph.slice(0, 24)}>{paragraph}</p>
           ))}
           <h2 className="font-display mt-12 text-2xl text-navy">
+            {t.experienceHeading}
+          </h2>
+          <ol className="mt-6 space-y-6">
+            {content.experience.map((item) => (
+              <li key={item.id} className="border-s-2 border-gold ps-4">
+                <p className="text-xs tracking-[0.16em] text-gold">
+                  {locale === "ar" ? item.periodAr : item.periodEn}
+                </p>
+                <p className="mt-1 font-medium text-navy">
+                  {locale === "ar" ? item.titleAr : item.titleEn}
+                </p>
+                <p className="mt-2 text-sm leading-7 text-ink/80">
+                  {locale === "ar" ? item.descriptionAr : item.descriptionEn}
+                </p>
+              </li>
+            ))}
+          </ol>
+          <h2 className="font-display mt-12 text-2xl text-navy">
             {t.approachHeading}
           </h2>
           <p className="mt-4">{t.approachText}</p>
@@ -75,16 +93,6 @@ export default async function AboutPage({
                 </dd>
               </div>
               <div>
-                <dt className="text-muted">
-                  {locale === "ar" ? "الجهة" : "Organisation"}
-                </dt>
-                <dd className="mt-1 text-navy">
-                  {locale === "ar"
-                    ? content.identity.organizationAr
-                    : content.identity.organizationEn}
-                </dd>
-              </div>
-              <div>
                 <dt className="text-muted">{t.location}</dt>
                 <dd className="mt-1 text-navy">
                   {locale === "ar"
@@ -96,13 +104,28 @@ export default async function AboutPage({
           </div>
           <div className="border border-navy/10 bg-white p-7">
             <h2 className="text-xs tracking-[0.2em] text-gold uppercase">
-              {t.credentialsHeading}
+              {t.educationHeading}
             </h2>
-            <p className="mt-4 text-sm leading-7 text-muted">
-              {t.credentialsNote}
+            <p className="mt-4 text-sm leading-7 text-navy">
+              {locale === "ar"
+                ? content.credentials.educationAr
+                : content.credentials.educationEn}
             </p>
-            <p className="mt-4 border border-dashed border-navy/20 px-3 py-2 text-sm text-navy/70">
-              {t.credentialsPlaceholder}
+            <h3 className="mt-6 text-xs tracking-[0.2em] text-gold uppercase">
+              {t.membershipsHeading}
+            </h3>
+            <p className="mt-3 text-sm leading-7 text-navy">
+              {locale === "ar"
+                ? content.credentials.membershipsAr
+                : content.credentials.membershipsEn}
+            </p>
+            <h3 className="mt-6 text-xs tracking-[0.2em] text-gold uppercase">
+              {t.languagesHeading}
+            </h3>
+            <p className="mt-3 text-sm leading-7 text-navy">
+              {locale === "ar"
+                ? content.credentials.languagesAr
+                : content.credentials.languagesEn}
             </p>
           </div>
         </aside>

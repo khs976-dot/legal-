@@ -20,6 +20,8 @@ function isSiteContent(value: unknown): value is SiteContent {
       record.hero &&
       record.bio &&
       Array.isArray(record.practiceAreas) &&
+      Array.isArray(record.experience) &&
+      record.credentials &&
       record.contact &&
       record.social &&
       record.cta,
