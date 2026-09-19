@@ -94,8 +94,11 @@ Fields: **name**, **subject** (Consultation / Contract drafting / Lawsuit), **ph
 
 Delivery, in order:
 
-1. If `CONTACT_FORM_ENDPOINT` is set (optional **Web3Forms** free key, or Formspree free endpoint), the server POSTs there.
-2. Otherwise the browser opens `mailto:khs.976@outlook.com` with subject `[طلب موقع] استشارة — Name`.
+1. `RESEND_API_KEY` (optional) — server sends to `CONTACT_TO_EMAIL`.
+2. `CONTACT_FORM_ENDPOINT` (optional **Web3Forms** or Formspree free) — server POSTs there. Add `CONTACT_FORM_ACCESS_KEY` for Web3Forms.
+3. Otherwise the browser opens `mailto:khs.976@outlook.com` with subject `[طلب موقع] استشارة — Name`.
+
+Env vars: `CONTACT_TO_EMAIL` (default `khs.976@outlook.com`), optional `RESEND_API_KEY` / `RESEND_FROM_EMAIL`, optional `CONTACT_FORM_ENDPOINT` / `CONTACT_FORM_ACCESS_KEY`.
 
 Free limits if you later add an endpoint: Web3Forms about 250 submissions/month; Formspree free about 50/month. Mailto has no quota. No paid plan is required.
 

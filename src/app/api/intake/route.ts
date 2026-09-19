@@ -25,7 +25,10 @@ export async function POST(request: Request) {
   }
 
   const content = await getContent();
-  const to = content.contact.email.trim() || defaultContactEmail();
+  const to =
+    process.env.CONTACT_TO_EMAIL?.trim() ||
+    content.contact.email.trim() ||
+    defaultContactEmail();
   const subjectAr = subjectLabel(subject, "ar");
   const emailSubject = `[طلب موقع] ${subjectAr} — ${name}`;
   const emailBody = [
@@ -37,6 +40,30 @@ export async function POST(request: Request) {
     `Subject: ${subjectLabel(subject, "en")}`,
     `Phone: ${phone}`,
   ].join("\n");
+
+  const resendKey = process.env.RESEND_API_KEY?.trim();
+  if (resendKey) {
+    const resend = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${resendKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: process.env.RESEND_FROM_EMAIL?.trim() || "لوحة الطلب <onboarding@resend.dev>",
+        to: [to],
+        subject: emailSubject,
+        text: emailBody,
+      }),
+    });
+    if (!resend.ok) {
+      return NextResponse.json(
+        { error: "The mail service rejected the request." },
+        { status: 502 },
+      );
+    }
+    return NextResponse.json({ ok: true, delivered: "resend" });
+  }
 
   const endpoint = process.env.CONTACT_FORM_ENDPOINT?.trim();
   const accessKey = process.env.CONTACT_FORM_ACCESS_KEY?.trim();

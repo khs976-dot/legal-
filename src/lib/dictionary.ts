@@ -42,7 +42,7 @@ const dictionary = {
     formPhone: "رقم الهاتف",
     formSubmit: "إرسال الطلب",
     formMailtoHint: "قد يُفتح برنامج البريد لديك لإكمال الإرسال إن لم تُضبط خدمة النماذج المجانية.",
-    formSuccess: "تم إرسال طلبك. سيتم التواصل معك.",
+    formSuccess: "تم إرسال طلبك. سيتواصل معك خالد السميري.",
     formError: "تعذّر الإرسال. يُرجى المحاولة لاحقاً أو الاتصال مباشرة.",
     required: "مطلوب",
     subjectConsultation: "استشارة",
@@ -104,7 +104,7 @@ const dictionary = {
     formSubmit: "Send request",
     formMailtoHint:
       "Your email application may open to complete sending if a free form service is not configured.",
-    formSuccess: "Your request has been sent. You will be contacted.",
+    formSuccess: "Your request has been sent. Khaled will contact you.",
     formError: "The request could not be sent. Please try again or call directly.",
     required: "Required",
     subjectConsultation: "Consultation",
