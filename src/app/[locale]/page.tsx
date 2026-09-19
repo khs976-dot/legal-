@@ -82,6 +82,18 @@ export default async function HomePage({
             <p className="mt-8 max-w-xl text-base leading-8 text-ink/85">
               {locale === "ar" ? content.bio.shortAr : content.bio.shortEn}
             </p>
+            <ul className="mt-8 grid gap-3 text-sm text-navy">
+              {content.highlights.map((item) => (
+                <li key={item.id} className="border-s-2 border-gold ps-3">
+                  <span className="font-medium">
+                    {locale === "ar" ? item.titleAr : item.titleEn}
+                  </span>
+                  <span className="mt-1 block text-ink/75">
+                    {locale === "ar" ? item.textAr : item.textEn}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
           <aside className="border border-gold/30 bg-ivory p-8">
             <p className="text-xs tracking-[0.2em] text-gold uppercase">

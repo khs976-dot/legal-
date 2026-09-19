@@ -55,6 +55,21 @@ export default async function AboutPage({
             <p key={paragraph.slice(0, 24)}>{paragraph}</p>
           ))}
           <h2 className="font-display mt-12 text-2xl text-navy">
+            {t.highlightsHeading}
+          </h2>
+          <ul className="mt-6 space-y-4">
+            {content.highlights.map((item) => (
+              <li key={item.id} className="border-s-2 border-gold ps-4">
+                <p className="font-medium text-navy">
+                  {locale === "ar" ? item.titleAr : item.titleEn}
+                </p>
+                <p className="mt-1 text-sm leading-7 text-ink/80">
+                  {locale === "ar" ? item.textAr : item.textEn}
+                </p>
+              </li>
+            ))}
+          </ul>
+          <h2 className="font-display mt-12 text-2xl text-navy">
             {t.experienceHeading}
           </h2>
           <ol className="mt-6 space-y-6">

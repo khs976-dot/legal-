@@ -70,10 +70,10 @@
     },
     {
       "id": "regulatory-governance",
-      "titleAr": "المشورة الرقابية والحوكمة",
-      "titleEn": "Regulatory advisory & corporate governance",
-      "descriptionAr": "مشورة تتصل بمتطلبات سوق المال والرقابة المصرفية والحوكمة المؤسسية، في حدود الملف التعريفي.",
-      "descriptionEn": "Advisory work connected with capital-markets and central-bank oversight and with corporate governance, within the limits of this profile."
+      "titleAr": "مشورة هيئة الأسواق وبنك الكويت المركزي والحوكمة",
+      "titleEn": "CMA & CBK regulatory advisory / governance",
+      "descriptionAr": "مشورة تتصل بمتطلبات هيئة أسواق المال وبنك الكويت المركزي والحوكمة المؤسسية، في حدود الملف التعريفي.",
+      "descriptionEn": "Advisory work connected with CMA and CBK oversight and with corporate governance, within the limits of this profile."
     },
     {
       "id": "disputes",
@@ -88,6 +88,36 @@
       "titleEn": "Real assets & real-estate investment",
       "descriptionAr": "عناية بالجوانب القانونية لدورة الاستثمار في الأصول العقارية والحقيقية.",
       "descriptionEn": "Legal aspects of the real-asset and real-estate investment lifecycle."
+    }
+  ],
+  "highlights": [
+    {
+      "id": "h-transactions",
+      "titleAr": "معاملات استثمار وتمويل",
+      "titleEn": "Investment & financing transactions",
+      "textAr": "عناية بمعاملات استثمار وتمويل ذات وزن مؤسسي، دون نشر أرقام أو قوائم عملاء.",
+      "textEn": "Work on high-value investment and financing transactions, without publishing figures or client names."
+    },
+    {
+      "id": "h-crossborder",
+      "titleAr": "هيكلة صناديق وكيانات عابرة للحدود",
+      "titleEn": "Cross-border fund & SPV structuring",
+      "textAr": "مساندة هيكلة الصناديق والكيانات ذات الغرض الخاص في سياقات عابرة للحدود.",
+      "textEn": "Support for cross-border fund and special-purpose-vehicle structuring."
+    },
+    {
+      "id": "h-islamic",
+      "titleAr": "منتجات تمويل متوافقة مع الشريعة",
+      "titleEn": "Islamic financing products",
+      "textAr": "مساندة تطوير منتجات تمويل متوافقة مع الضوابط الشرعية عند الحاجة.",
+      "textEn": "Support for Islamic financing product development where it arises."
+    },
+    {
+      "id": "h-operations",
+      "titleAr": "تشغيل الشؤون القانونية",
+      "titleEn": "Legal operations",
+      "textAr": "عناية بتنظيم العمل القانوني ولوحات المتابعة الداخلية للأداء.",
+      "textEn": "Legal-operations organisation, including internal performance dashboards."
     }
   ],
   "experience": [

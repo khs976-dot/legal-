@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { PersistMode } from "@/lib/content";
-import type { ExperienceItem, PracticeArea, SiteContent } from "@/lib/types";
+import type { ExperienceItem, Highlight, PracticeArea, SiteContent } from "@/lib/types";
 
 type AdminDashboardProps = {
   initialContent: SiteContent;
@@ -15,6 +15,7 @@ type SectionId =
   | "identity"
   | "hero"
   | "bio"
+  | "highlights"
   | "experience"
   | "credentials"
   | "practice"
@@ -25,6 +26,7 @@ const sections: { id: SectionId; label: string }[] = [
   { id: "identity", label: "Name & titles" },
   { id: "hero", label: "Hero text" },
   { id: "bio", label: "Biography" },
+  { id: "highlights", label: "Soft highlights" },
   { id: "experience", label: "Professional path" },
   { id: "credentials", label: "Education & memberships" },
   { id: "practice", label: "Practice areas" },
@@ -122,6 +124,38 @@ export function AdminDashboard({
       practiceAreas: current.practiceAreas.map((area, i) =>
         i === index ? { ...area, ...patch } : area,
       ),
+    }));
+  }
+
+  function updateHighlight(index: number, patch: Partial<Highlight>) {
+    setContent((current) => ({
+      ...current,
+      highlights: current.highlights.map((item, i) =>
+        i === index ? { ...item, ...patch } : item,
+      ),
+    }));
+  }
+
+  function addHighlight() {
+    setContent((current) => ({
+      ...current,
+      highlights: [
+        ...current.highlights,
+        {
+          id: `highlight-${crypto.randomUUID()}`,
+          titleAr: "",
+          titleEn: "",
+          textAr: "",
+          textEn: "",
+        },
+      ],
+    }));
+  }
+
+  function removeHighlight(index: number) {
+    setContent((current) => ({
+      ...current,
+      highlights: current.highlights.filter((_, i) => i !== index),
     }));
   }
 
@@ -438,6 +472,73 @@ export function AdminDashboard({
                 onChange={(value) => updateBio("longEn", value)}
                 multiline
               />
+            </section>
+          ) : null}
+
+          {section === "highlights" ? (
+            <section className="grid gap-4">
+              <div className="flex items-center justify-between">
+                <h2 className="font-display text-2xl text-navy">
+                  Soft highlights
+                </h2>
+                <button
+                  type="button"
+                  onClick={addHighlight}
+                  className="bg-navy px-3 py-2 text-sm text-ivory"
+                >
+                  Add highlight
+                </button>
+              </div>
+              <p className="text-sm text-muted">
+                Keep these general. Do not add transaction values, win rates, or
+                employer names.
+              </p>
+              {content.highlights.map((item, index) => (
+                <article key={item.id} className="grid gap-3 bg-white p-5">
+                  <div className="flex justify-between">
+                    <p className="text-sm text-muted">Note {index + 1}</p>
+                    <button
+                      type="button"
+                      onClick={() => removeHighlight(index)}
+                      className="border border-red-300 px-2 py-1 text-xs text-red-800"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                  <Field
+                    label="العنوان (عربي)"
+                    value={item.titleAr}
+                    onChange={(value) =>
+                      updateHighlight(index, { titleAr: value })
+                    }
+                    dir="rtl"
+                  />
+                  <Field
+                    label="Title (English)"
+                    value={item.titleEn}
+                    onChange={(value) =>
+                      updateHighlight(index, { titleEn: value })
+                    }
+                  />
+                  <Field
+                    label="النص (عربي)"
+                    value={item.textAr}
+                    onChange={(value) =>
+                      updateHighlight(index, { textAr: value })
+                    }
+                    multiline
+                    dir="rtl"
+                  />
+                  <Field
+                    label="Text (English)"
+                    value={item.textEn}
+                    onChange={(value) =>
+                      updateHighlight(index, { textEn: value })
+                    }
+                    multiline
+                  />
+                </article>
+              ))}
             </section>
           ) : null}
 

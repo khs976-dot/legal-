@@ -8,6 +8,14 @@ export type PracticeArea = {
   descriptionEn: string;
 };
 
+export type Highlight = {
+  id: string;
+  titleAr: string;
+  titleEn: string;
+  textAr: string;
+  textEn: string;
+};
+
 export type ExperienceItem = {
   id: string;
   periodAr: string;
@@ -46,6 +54,7 @@ export type SiteContent = {
     longEn: string;
   };
   practiceAreas: PracticeArea[];
+  highlights: Highlight[];
   experience: ExperienceItem[];
   credentials: {
     educationAr: string;
