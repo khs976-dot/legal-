@@ -9,6 +9,8 @@ export function IntakeForm({ locale }: { locale: Locale }) {
   const t = getDictionary(locale);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [pending, setPending] = useState(false);
+  const [copyText, setCopyText] = useState("");
+  const [copied, setCopied] = useState(false);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -16,6 +18,7 @@ export function IntakeForm({ locale }: { locale: Locale }) {
     const data = new FormData(form);
     setPending(true);
     setStatus("idle");
+    setCopied(false);
 
     try {
       const response = await fetch("/api/intake", {
@@ -29,11 +32,22 @@ export function IntakeForm({ locale }: { locale: Locale }) {
       });
       const result = (await response.json().catch(() => null)) as {
         mailto?: string;
+        copyText?: string;
         ok?: boolean;
       } | null;
 
       if (!response.ok) {
         throw new Error("intake failed");
+      }
+
+      if (result?.copyText) {
+        setCopyText(result.copyText);
+        try {
+          await navigator.clipboard.writeText(result.copyText);
+          setCopied(true);
+        } catch {
+          /* clipboard may be blocked */
+        }
       }
 
       if (result?.mailto) {
@@ -46,6 +60,14 @@ export function IntakeForm({ locale }: { locale: Locale }) {
     } finally {
       setPending(false);
     }
+  }
+
+  async function copyAgain() {
+    if (!copyText) {
+      return;
+    }
+    await navigator.clipboard.writeText(copyText);
+    setCopied(true);
   }
 
   return (
@@ -106,9 +128,20 @@ export function IntakeForm({ locale }: { locale: Locale }) {
       </button>
       <p className="text-sm text-muted">{t.formMailtoHint}</p>
       {status === "success" ? (
-        <p className="text-sm text-navy" role="status">
-          {t.formSuccess}
-        </p>
+        <div className="space-y-2">
+          <p className="text-sm text-navy" role="status">
+            {t.formSuccess}
+          </p>
+          {copyText ? (
+            <button
+              type="button"
+              onClick={copyAgain}
+              className="text-sm text-navy underline decoration-gold underline-offset-4"
+            >
+              {copied ? t.formCopied : t.formCopy}
+            </button>
+          ) : null}
+        </div>
       ) : null}
       {status === "error" ? (
         <p className="text-sm text-red-800" role="alert">

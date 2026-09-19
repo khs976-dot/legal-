@@ -41,30 +41,6 @@ export async function POST(request: Request) {
     `Phone: ${phone}`,
   ].join("\n");
 
-  const resendKey = process.env.RESEND_API_KEY?.trim();
-  if (resendKey) {
-    const resend = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${resendKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: process.env.RESEND_FROM_EMAIL?.trim() || "لوحة الطلب <onboarding@resend.dev>",
-        to: [to],
-        subject: emailSubject,
-        text: emailBody,
-      }),
-    });
-    if (!resend.ok) {
-      return NextResponse.json(
-        { error: "The mail service rejected the request." },
-        { status: 502 },
-      );
-    }
-    return NextResponse.json({ ok: true, delivered: "resend" });
-  }
-
   const endpoint = process.env.CONTACT_FORM_ENDPOINT?.trim();
   const accessKey = process.env.CONTACT_FORM_ACCESS_KEY?.trim();
 
@@ -100,5 +76,11 @@ export async function POST(request: Request) {
   }
 
   const mailto = `mailto:${to}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-  return NextResponse.json({ ok: true, delivered: "mailto", mailto });
+  const copyText = `To: ${to}\nSubject: ${emailSubject}\n\n${emailBody}`;
+  return NextResponse.json({
+    ok: true,
+    delivered: "mailto",
+    mailto,
+    copyText,
+  });
 }

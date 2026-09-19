@@ -6,9 +6,9 @@ A bilingual professional profile (Arabic first / RTL, plus English) for Khaled A
 
 The site is informational. It is **not legal advice**.
 
-This repository is prepared for **review and preview only**. It is not a production go-live.
+This repository is for **review and preview only**. It is not a production go-live.
 
-The stack is **free-tier only**: no paid hosting plans, no paid CMS, no paid form products required, no paid fonts or analytics.
+**The stack is free-tier only.** No paid hosting, no paid CMS, no paid form product, no paid fonts, no paid analytics, and no credit card is required for any documented path.
 
 ---
 
@@ -49,26 +49,15 @@ npm run dev
 - لوحة التحكم: http://localhost:3000/admin
 - لوحة الطلب: http://localhost:3000/contact#intake
 
-### النشر لاحقاً (اختياري، مجاني فقط)
+### استضافة لاحقاً (مجانية فقط، اختيارية)
 
-عند الرغبة في معاينة عامة لاحقاً — وليس الآن — يمكن استخدام **Vercel Hobby** المجاني (`*.vercel.app`) دون بطاقة ائتمان. لا يُشترط نطاق مدفوع.
+للمعاينة العامة لاحقاً يكفي **Vercel Hobby** المجاني على نطاق `*.vercel.app`. لا يُطلب نطاق مدفوع، ولا تُفعَّل إضافات مدفوعة، ولا تُستخدم بطاقة ائتمان.
 
-1. اربط المستودع بـ Vercel (الخطة المجانية).
-2. أضف `ADMIN_PASSWORD` و`CONTACT_TO_EMAIL`.
-3. اختياري للنماذج دون فتح برنامج البريد: **Web3Forms** المجاني (250 طلباً/شهر تقريباً) عبر `CONTACT_FORM_ENDPOINT` و`CONTACT_FORM_ACCESS_KEY`.
-
-لا يُنصح بأي ترقية مدفوعة.
+حدود الطبقة المجانية إن أُضيفت خدمة نماذج لاحقاً: Web3Forms نحو 250 طلباً/شهر، وFormspree نحو 50 طلباً/شهر. مسار `mailto` بلا حد.
 
 ---
 
 ## English
-
-### Pages
-
-- Home, About, Practice, Contact (intake panel)
-- `/admin` dashboard edits `content/site.json`
-
-Employer and law-firm names are omitted on purpose. Roles are described by function, sector, and years.
 
 ### Preview locally
 
@@ -86,29 +75,35 @@ npm run dev
 | Admin | http://localhost:3000/admin |
 | Intake form | http://localhost:3000/contact#intake |
 
-Admin password is `ADMIN_PASSWORD`. Intake email target is `CONTACT_TO_EMAIL` (default `khs.976@outlook.com`).
+### Free-tier only
 
-### Intake form (free)
+| Piece | Free path | Limit if used |
+| --- | --- | --- |
+| Hosting | Vercel Hobby `*.vercel.app` (later, optional) | Hobby quotas; no paid domain required |
+| Intake email | `mailto:` + copy-to-clipboard by default | None |
+| Optional form API | Web3Forms or Formspree **free** | ~250 / ~50 submissions per month |
+| Admin / CMS | `/admin` writes `content/site.json` | None |
+| Fonts | Google Fonts | None |
+| Analytics / stock images | None | — |
 
-Fields: **name**, **subject** (Consultation / Contract drafting / Lawsuit), **phone**.
+No paid upgrade is part of this project.
 
-Delivery, in order:
+### Intake form
 
-1. `RESEND_API_KEY` (optional) — server sends to `CONTACT_TO_EMAIL`.
-2. `CONTACT_FORM_ENDPOINT` (optional **Web3Forms** or Formspree free) — server POSTs there. Add `CONTACT_FORM_ACCESS_KEY` for Web3Forms.
-3. Otherwise the browser opens `mailto:khs.976@outlook.com` with subject `[طلب موقع] استشارة — Name`.
+Fields: **name**, **subject** (استشارة / صياغة عقد / دعوى), **phone**.
 
-Env vars: `CONTACT_TO_EMAIL` (default `khs.976@outlook.com`), optional `RESEND_API_KEY` / `RESEND_FROM_EMAIL`, optional `CONTACT_FORM_ENDPOINT` / `CONTACT_FORM_ACCESS_KEY`.
+Delivery:
 
-Free limits if you later add an endpoint: Web3Forms about 250 submissions/month; Formspree free about 50/month. Mailto has no quota. No paid plan is required.
+1. If `CONTACT_FORM_ENDPOINT` is set (Web3Forms or Formspree free), the server POSTs there. Add `CONTACT_FORM_ACCESS_KEY` for Web3Forms.
+2. Otherwise the browser opens `mailto:khs.976@outlook.com` with subject `[طلب موقع] استشارة — Name`, and the request text can be copied.
 
-### Later hosting (optional, free only)
+Required env: `ADMIN_PASSWORD`.  
+Intake destination: `CONTACT_TO_EMAIL` (default `khs.976@outlook.com`).  
+Optional free form: `CONTACT_FORM_ENDPOINT`, `CONTACT_FORM_ACCESS_KEY`.
 
-Vercel Hobby (`*.vercel.app`) is enough. Custom domains are optional and unused for this review. Do not enable paid add-ons.
+### Stack
 
-### Stack (all free)
-
-Next.js App Router, TypeScript, Tailwind, Google Fonts, file-based JSON admin. No paid dependencies in `package.json`.
+Next.js App Router, TypeScript, Tailwind, Google Fonts. `package.json` has no paid licensed services.
 
 ```bash
 npm run dev
