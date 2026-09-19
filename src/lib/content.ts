@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
+import { connection } from "next/server";
 import type { SiteContent } from "./types";
 
 const CONTENT_PATH = path.join(process.cwd(), "content", "site.json");
@@ -25,32 +26,46 @@ function isSiteContent(value: unknown): value is SiteContent {
   );
 }
 
-async function readJsonFile(filePath: string): Promise<SiteContent | null> {
+async function readJsonFile(
+  filePath: string,
+): Promise<{ content: SiteContent; mtime: number } | null> {
   try {
-    const raw = await fs.readFile(filePath, "utf8");
+    const [raw, stat] = await Promise.all([
+      fs.readFile(filePath, "utf8"),
+      fs.stat(filePath),
+    ]);
     const parsed = JSON.parse(raw) as unknown;
-    return isSiteContent(parsed) ? parsed : null;
+    return isSiteContent(parsed)
+      ? { content: parsed, mtime: stat.mtimeMs }
+      : null;
   } catch {
     return null;
   }
 }
 
 export async function getContent(): Promise<SiteContent> {
+  await connection();
+  const [fromRepo, fromTmp] = await Promise.all([
+    readJsonFile(CONTENT_PATH),
+    readJsonFile(TMP_PATH),
+  ]);
+
+  const newest = [fromRepo, fromTmp]
+    .filter((entry): entry is { content: SiteContent; mtime: number } =>
+      Boolean(entry),
+    )
+    .sort((left, right) => right.mtime - left.mtime)[0];
+
+  if (newest) {
+    memoryCache = newest.content;
+    return newest.content;
+  }
+
   if (memoryCache) {
     return memoryCache;
   }
 
-  const fromTmp = await readJsonFile(TMP_PATH);
-  if (fromTmp) {
-    memoryCache = fromTmp;
-    return fromTmp;
-  }
-
-  const fromRepo = await readJsonFile(CONTENT_PATH);
-  if (!fromRepo) {
-    throw new Error("Unable to read content/site.json");
-  }
-  return fromRepo;
+  throw new Error("Unable to read content/site.json");
 }
 
 async function saveToGithub(json: string): Promise<void> {
