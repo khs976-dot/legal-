@@ -33,12 +33,6 @@ export async function PUT(request: Request) {
     const result = await saveContent(body.content);
     revalidatePath("/", "layout");
     revalidatePath("/en", "layout");
-    revalidatePath("/about");
-    revalidatePath("/practice");
-    revalidatePath("/contact");
-    revalidatePath("/en/about");
-    revalidatePath("/en/practice");
-    revalidatePath("/en/contact");
     return NextResponse.json({
       ok: true,
       persist: result.persist,

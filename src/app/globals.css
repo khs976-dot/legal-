@@ -117,28 +117,178 @@ html[lang="ar"] .ornament::after {
   flex-shrink: 0;
 }
 
-.hero-grid {
-  background-color: var(--navy-deep);
-  background-image:
-    linear-gradient(180deg, rgba(11, 31, 58, 0.2), rgba(7, 21, 38, 0.88)),
-    radial-gradient(circle at 20% 20%, rgba(196, 163, 90, 0.12), transparent 36%),
-    radial-gradient(circle at 80% 80%, rgba(20, 48, 85, 0.7), transparent 42%),
-    linear-gradient(rgba(196, 163, 90, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(196, 163, 90, 0.05) 1px, transparent 1px);
-  background-size:
-    auto,
-    auto,
-    auto,
-    48px 48px,
-    48px 48px;
+.hero-wash {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 40% at 80% 20%, rgba(196, 163, 90, 0.14), transparent 60%),
+    radial-gradient(ellipse 40% 50% at 10% 80%, rgba(11, 31, 58, 0.05), transparent 55%);
 }
 
-.prose-profile p + p {
-  margin-top: 1.15rem;
+.hero-stage {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  min-height: 320px;
+  display: grid;
+  place-items: center;
+  perspective: 900px;
+}
+
+.hero-rig {
+  position: relative;
+  width: min(100%, 340px);
+  height: 320px;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform 0.4s ease;
+}
+
+.hero-plane {
+  position: absolute;
+  inset-inline-start: 18%;
+  top: 16%;
+  width: 64%;
+  height: 68%;
+  border: 1px solid rgba(196, 163, 90, 0.45);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 253, 248, 0.4),
+    rgba(11, 31, 58, 0.06)
+  );
+  transform-style: preserve-3d;
+}
+
+.hero-plane-a {
+  transform: translateZ(40px) rotateY(-18deg);
+  animation: float-a 9s ease-in-out infinite;
+}
+
+.hero-plane-b {
+  background: linear-gradient(160deg, #0b1f3a, #1d3f6b);
+  border-color: rgba(196, 163, 90, 0.35);
+  transform: translateZ(8px) rotateY(12deg) translateX(8%);
+  animation: float-b 11s ease-in-out infinite;
+}
+
+.hero-plane-c {
+  width: 42%;
+  height: 42%;
+  inset-inline-start: 38%;
+  top: 28%;
+  background: linear-gradient(135deg, #c4a35a, #e0c57a);
+  border: none;
+  transform: translateZ(70px) rotateX(18deg) rotateZ(-8deg);
+  animation: float-c 8s ease-in-out infinite;
+  box-shadow: 0 18px 40px rgba(11, 31, 58, 0.18);
+}
+
+.hero-orb {
+  position: absolute;
+  inset-inline-start: 58%;
+  top: 12%;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #f3e6c3, #c4a35a 55%, #8d7034);
+  transform: translateZ(90px);
+  animation: float-orb 7s ease-in-out infinite;
+  box-shadow: 0 10px 30px rgba(196, 163, 90, 0.35);
+}
+
+.hero-ring {
+  position: absolute;
+  inset-inline-start: 8%;
+  bottom: 10%;
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  border: 1px solid rgba(196, 163, 90, 0.55);
+  transform: translateZ(20px) rotateX(62deg);
+  animation: spin-slow 18s linear infinite;
+}
+
+.rise {
+  animation: rise 0.9s ease both;
+}
+
+.card-lift {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(11, 31, 58, 0.08);
+}
+
+@keyframes float-a {
+  0%,
+  100% {
+    transform: translateZ(40px) rotateY(-18deg) translateY(0);
+  }
+  50% {
+    transform: translateZ(48px) rotateY(-14deg) translateY(-8px);
+  }
+}
+
+@keyframes float-b {
+  0%,
+  100% {
+    transform: translateZ(8px) rotateY(12deg) translateX(8%);
+  }
+  50% {
+    transform: translateZ(16px) rotateY(16deg) translateX(10%) translateY(6px);
+  }
+}
+
+@keyframes float-c {
+  0%,
+  100% {
+    transform: translateZ(70px) rotateX(18deg) rotateZ(-8deg);
+  }
+  50% {
+    transform: translateZ(82px) rotateX(12deg) rotateZ(-4deg) translateY(-10px);
+  }
+}
+
+@keyframes float-orb {
+  0%,
+  100% {
+    transform: translateZ(90px) translateY(0);
+  }
+  50% {
+    transform: translateZ(104px) translateY(-12px);
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: translateZ(20px) rotateX(62deg) rotateZ(360deg);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .hero-plane,
+  .hero-orb,
+  .hero-ring,
+  .rise,
+  .hero-rig {
+    animation: none !important;
+    transition: none !important;
   }
 }

@@ -1,11 +1,9 @@
 export type Locale = "ar" | "en";
 
-export type PracticeArea = {
+export type Chip = {
   id: string;
-  titleAr: string;
-  titleEn: string;
-  descriptionAr: string;
-  descriptionEn: string;
+  labelAr: string;
+  labelEn: string;
 };
 
 export type Highlight = {
@@ -16,60 +14,18 @@ export type Highlight = {
   textEn: string;
 };
 
-export type ExperienceItem = {
-  id: string;
-  periodAr: string;
-  periodEn: string;
-  titleAr: string;
-  titleEn: string;
-  descriptionAr: string;
-  descriptionEn: string;
-};
-
-export type IntakeSubjectItem = {
-  id: string;
-  labelAr: string;
-  labelEn: string;
-};
-
 export const COPY_KEYS = [
   "skipToContent",
-  "navHome",
-  "navAbout",
-  "navPractice",
-  "navContact",
-  "navAria",
   "language",
   "languageToggleArLabel",
   "languageToggleEnLabel",
-  "openMenu",
-  "closeMenu",
-  "profileBadge",
-  "currentRole",
-  "locationLabel",
-  "practiceHeading",
-  "practiceIntro",
-  "viewAllPractice",
-  "aboutHeading",
-  "aboutLead",
-  "homeCtaSecondary",
+  "bioHeading",
+  "trustHeading",
   "highlightsHeading",
+  "emptyChips",
   "emptyHighlights",
-  "emptyPractice",
-  "glanceHeading",
-  "experienceHeading",
-  "educationHeading",
-  "membershipsHeading",
-  "languagesHeading",
-  "approachHeading",
-  "approachText",
-  "contactEmail",
-  "contactPhone",
-  "contactLinkedin",
-  "contactAddress",
-  "notProvided",
-  "intakeHeading",
-  "intakeIntro",
+  "inquiryHeading",
+  "inquiryIntro",
   "formName",
   "formSubject",
   "formPhone",
@@ -101,8 +57,6 @@ export type SiteContent = {
     monogram: string;
     titleAr: string;
     titleEn: string;
-    organizationAr: string;
-    organizationEn: string;
     locationAr: string;
     locationEn: string;
   };
@@ -117,54 +71,27 @@ export type SiteContent = {
   bio: {
     shortAr: string;
     shortEn: string;
-    longAr: string;
-    longEn: string;
   };
-  practiceAreas: PracticeArea[];
+  chips: Chip[];
   highlights: Highlight[];
-  experience: ExperienceItem[];
-  credentials: {
-    educationAr: string;
-    educationEn: string;
-    membershipsAr: string;
-    membershipsEn: string;
-    languagesAr: string;
-    languagesEn: string;
-  };
-  contact: {
-    email: string;
-    phone: string;
-    linkedin: string;
-    addressAr: string;
-    addressEn: string;
-    formspreeEndpoint: string;
-  };
-  social: {
-    linkedin: string;
-    x: string;
-    website: string;
-  };
   cta: {
     labelAr: string;
     labelEn: string;
     textAr: string;
     textEn: string;
   };
-  intakeSubjects: IntakeSubjectItem[];
+  contact: {
+    email: string;
+    phone: string;
+    addressAr: string;
+    addressEn: string;
+    formspreeEndpoint: string;
+  };
   copy: SiteCopy;
 };
 
 export function isLocale(value: string): value is Locale {
   return value === "ar" || value === "en";
-}
-
-export function pickLocalized<T extends Record<string, string>>(
-  record: T,
-  locale: Locale,
-  arKey: keyof T,
-  enKey: keyof T,
-): string {
-  return locale === "ar" ? record[arKey] : record[enKey];
 }
 
 export function ui(

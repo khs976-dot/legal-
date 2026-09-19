@@ -2,13 +2,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { connection } from "next/server";
 import { mergeCopy } from "./copy";
-import type {
-  ExperienceItem,
-  Highlight,
-  IntakeSubjectItem,
-  PracticeArea,
-  SiteContent,
-} from "./types";
+import type { Chip, Highlight, SiteContent } from "./types";
 
 const CONTENT_PATH = path.join(process.cwd(), "content", "site.json");
 const TMP_PATH = path.join("/tmp", "alsmairi-site-content.json");
@@ -47,15 +41,31 @@ function normalizeList<T>(
     .filter((item): item is T => item !== null);
 }
 
+function chipsFromLegacy(record: Record<string, unknown>): Chip[] {
+  const practice = normalizeList<Chip>(record.practiceAreas, (item, index) => ({
+    id: stringField(item, "id", `chip-${index + 1}`),
+    labelAr: stringField(item, "titleAr"),
+    labelEn: stringField(item, "titleEn"),
+  }));
+  return practice.slice(0, 4);
+}
+
 export function normalizeContent(raw: unknown): SiteContent {
   const record = asRecord(raw) ?? {};
   const identity = asRecord(record.identity);
   const hero = asRecord(record.hero);
   const bio = asRecord(record.bio);
-  const credentials = asRecord(record.credentials);
   const contact = asRecord(record.contact);
-  const social = asRecord(record.social);
   const cta = asRecord(record.cta);
+
+  let chips = normalizeList<Chip>(record.chips, (item, index) => ({
+    id: stringField(item, "id", `chip-${index + 1}`),
+    labelAr: stringField(item, "labelAr"),
+    labelEn: stringField(item, "labelEn"),
+  }));
+  if (chips.length === 0) {
+    chips = chipsFromLegacy(record);
+  }
 
   return {
     identity: {
@@ -66,8 +76,6 @@ export function normalizeContent(raw: unknown): SiteContent {
       monogram: stringField(identity, "monogram", "KA"),
       titleAr: stringField(identity, "titleAr"),
       titleEn: stringField(identity, "titleEn"),
-      organizationAr: stringField(identity, "organizationAr"),
-      organizationEn: stringField(identity, "organizationEn"),
       locationAr: stringField(identity, "locationAr"),
       locationEn: stringField(identity, "locationEn"),
     },
@@ -80,21 +88,10 @@ export function normalizeContent(raw: unknown): SiteContent {
       subheadlineEn: stringField(hero, "subheadlineEn"),
     },
     bio: {
-      shortAr: stringField(bio, "shortAr"),
-      shortEn: stringField(bio, "shortEn"),
-      longAr: stringField(bio, "longAr"),
-      longEn: stringField(bio, "longEn"),
+      shortAr: stringField(bio, "shortAr", stringField(bio, "longAr")),
+      shortEn: stringField(bio, "shortEn", stringField(bio, "longEn")),
     },
-    practiceAreas: normalizeList<PracticeArea>(
-      record.practiceAreas,
-      (item, index) => ({
-        id: stringField(item, "id", `area-${index + 1}`),
-        titleAr: stringField(item, "titleAr"),
-        titleEn: stringField(item, "titleEn"),
-        descriptionAr: stringField(item, "descriptionAr"),
-        descriptionEn: stringField(item, "descriptionEn"),
-      }),
-    ),
+    chips,
     highlights: normalizeList<Highlight>(record.highlights, (item, index) => ({
       id: stringField(item, "id", `highlight-${index + 1}`),
       titleAr: stringField(item, "titleAr"),
@@ -102,68 +99,26 @@ export function normalizeContent(raw: unknown): SiteContent {
       textAr: stringField(item, "textAr"),
       textEn: stringField(item, "textEn"),
     })),
-    experience: normalizeList<ExperienceItem>(
-      record.experience,
-      (item, index) => ({
-        id: stringField(item, "id", `role-${index + 1}`),
-        periodAr: stringField(item, "periodAr"),
-        periodEn: stringField(item, "periodEn"),
-        titleAr: stringField(item, "titleAr"),
-        titleEn: stringField(item, "titleEn"),
-        descriptionAr: stringField(item, "descriptionAr"),
-        descriptionEn: stringField(item, "descriptionEn"),
-      }),
-    ),
-    credentials: {
-      educationAr: stringField(credentials, "educationAr"),
-      educationEn: stringField(credentials, "educationEn"),
-      membershipsAr: stringField(credentials, "membershipsAr"),
-      membershipsEn: stringField(credentials, "membershipsEn"),
-      languagesAr: stringField(credentials, "languagesAr"),
-      languagesEn: stringField(credentials, "languagesEn"),
-    },
-    contact: {
-      email: stringField(contact, "email"),
-      phone: stringField(contact, "phone"),
-      linkedin: stringField(contact, "linkedin"),
-      addressAr: stringField(contact, "addressAr"),
-      addressEn: stringField(contact, "addressEn"),
-      formspreeEndpoint: stringField(contact, "formspreeEndpoint"),
-    },
-    social: {
-      linkedin: stringField(social, "linkedin"),
-      x: stringField(social, "x"),
-      website: stringField(social, "website"),
-    },
     cta: {
       labelAr: stringField(cta, "labelAr"),
       labelEn: stringField(cta, "labelEn"),
       textAr: stringField(cta, "textAr"),
       textEn: stringField(cta, "textEn"),
     },
-    intakeSubjects: normalizeList<IntakeSubjectItem>(
-      record.intakeSubjects,
-      (item, index) => ({
-        id: stringField(item, "id", `subject-${index + 1}`),
-        labelAr: stringField(item, "labelAr"),
-        labelEn: stringField(item, "labelEn"),
-      }),
-    ),
+    contact: {
+      email: stringField(contact, "email"),
+      phone: stringField(contact, "phone"),
+      addressAr: stringField(contact, "addressAr"),
+      addressEn: stringField(contact, "addressEn"),
+      formspreeEndpoint: stringField(contact, "formspreeEndpoint"),
+    },
     copy: mergeCopy(asRecord(record.copy) as Partial<SiteContent["copy"]>),
   };
 }
 
-function isSiteContent(value: unknown): value is SiteContent {
+function isSiteContent(value: unknown): boolean {
   const record = asRecord(value);
-  return Boolean(
-    record &&
-      asRecord(record.identity) &&
-      asRecord(record.hero) &&
-      asRecord(record.bio) &&
-      Array.isArray(record.practiceAreas) &&
-      asRecord(record.contact) &&
-      asRecord(record.cta),
-  );
+  return Boolean(record && asRecord(record.identity) && asRecord(record.hero));
 }
 
 async function readJsonFile(

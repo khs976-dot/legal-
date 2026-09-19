@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Ornament } from "@/components/Ornament";
+import { HeroScene } from "@/components/HeroScene";
+import { IntakeForm } from "@/components/IntakeForm";
 import { getContent } from "@/lib/content";
-import { localizedPath, parseLocaleParam } from "@/lib/i18n";
+import { parseLocaleParam } from "@/lib/i18n";
 import { isLocale, makeUi } from "@/lib/types";
 
 export default async function HomePage({
@@ -17,168 +18,157 @@ export default async function HomePage({
   const locale = parseLocaleParam(rawLocale);
   const content = await getContent();
   const t = makeUi(content, locale);
-  const highlights = content.practiceAreas.slice(0, 4);
+  const otherName =
+    locale === "ar" ? content.identity.nameEn : content.identity.nameAr;
 
   return (
-    <>
-      <section className="hero-grid text-ivory">
-        <div className="mx-auto flex min-h-[78vh] max-w-6xl flex-col justify-center px-5 py-20 md:px-8 md:py-28">
-          <p className="text-xs tracking-[0.28em] text-gold-light uppercase">
-            {locale === "ar" ? content.hero.eyebrowAr : content.hero.eyebrowEn}
-          </p>
-          <h1 className="font-display mt-6 max-w-4xl text-4xl leading-tight md:text-6xl">
-            {locale === "ar"
-              ? content.hero.headlineAr
-              : content.hero.headlineEn}
-          </h1>
-          <p className="mt-3 font-display text-xl text-gold-pale md:text-2xl">
-            {locale === "ar"
-              ? content.identity.nameEn
-              : content.identity.nameAr}
-          </p>
-          <div className="mt-8 max-w-md">
-            <Ornament light />
-          </div>
-          <p className="mt-8 max-w-2xl text-base leading-8 text-ivory/80 md:text-lg">
-            {locale === "ar"
-              ? content.hero.subheadlineAr
-              : content.hero.subheadlineEn}
-          </p>
-          <p className="mt-4 text-sm text-gold-pale">
-            {locale === "ar"
-              ? `${content.identity.titleAr} — ${content.identity.organizationAr}`
-              : `${content.identity.titleEn} — ${content.identity.organizationEn}`}
-          </p>
-          <div className="mt-10 flex flex-wrap gap-3">
+    <div className="bg-ivory">
+      <section className="relative overflow-hidden px-5 pb-20 pt-28 md:px-8 md:pb-28 md:pt-32">
+        <div className="hero-wash" aria-hidden="true" />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="rise">
+            <p className="text-xs tracking-[0.32em] text-gold uppercase">
+              {locale === "ar" ? content.hero.eyebrowAr : content.hero.eyebrowEn}
+            </p>
+            <h1 className="font-display mt-5 text-5xl leading-[1.15] text-navy md:text-7xl">
+              {locale === "ar"
+                ? content.hero.headlineAr
+                : content.hero.headlineEn}
+            </h1>
+            <p className="mt-3 text-lg text-navy/45">{otherName}</p>
+            <p className="mt-6 max-w-xl text-base leading-8 text-ink/75 md:text-lg">
+              {locale === "ar"
+                ? content.hero.subheadlineAr
+                : content.hero.subheadlineEn}
+            </p>
+            <p className="mt-3 text-sm text-muted">
+              {locale === "ar"
+                ? content.identity.titleAr
+                : content.identity.titleEn}
+            </p>
             <Link
-              href={`${localizedPath(locale, "/contact")}#intake`}
-              className="bg-gold px-6 py-3 text-sm tracking-[0.12em] text-navy-deep uppercase"
+              href="#inquiry"
+              className="mt-10 inline-flex bg-navy px-7 py-3 text-sm tracking-[0.16em] text-ivory uppercase"
             >
               {locale === "ar" ? content.cta.labelAr : content.cta.labelEn}
             </Link>
-            <Link
-              href={localizedPath(locale, "/about")}
-              className="border border-gold/50 px-6 py-3 text-sm tracking-[0.12em] text-ivory uppercase hover:border-gold"
-            >
-              {t("homeCtaSecondary")}
-            </Link>
           </div>
+          <HeroScene />
         </div>
       </section>
 
-      <section className="bg-cream">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1.1fr_0.9fr] md:px-8">
+      <section className="border-y border-navy/8 bg-cream">
+        <div className="mx-auto max-w-6xl px-5 py-12 md:px-8">
+          <p className="text-xs tracking-[0.24em] text-gold uppercase">
+            {t("trustHeading")}
+          </p>
+          {content.chips.length === 0 ? (
+            <p className="mt-5 text-sm text-muted">{t("emptyChips")}</p>
+          ) : (
+            <ul className="mt-6 flex flex-wrap gap-2.5">
+              {content.chips.map((chip) => (
+                <li
+                  key={chip.id}
+                  className="border border-gold/35 bg-ivory px-4 py-2 text-sm text-navy"
+                >
+                  {locale === "ar" ? chip.labelAr : chip.labelEn}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </section>
+
+      <section className="px-5 py-20 md:px-8">
+        <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[0.85fr_1.15fr]">
           <div>
             <p className="text-xs tracking-[0.24em] text-gold uppercase">
-              {t("profileBadge")}
+              {t("bioHeading")}
             </p>
-            <h2 className="font-display mt-4 text-3xl text-navy md:text-4xl">
-              {t("aboutHeading")}
-            </h2>
-            <div className="mt-6 max-w-xs">
-              <Ornament />
-            </div>
-            <p className="mt-8 max-w-xl text-base leading-8 text-ink/85">
+            <p className="mt-5 max-w-md text-lg leading-9 text-ink/80">
               {locale === "ar" ? content.bio.shortAr : content.bio.shortEn}
             </p>
+          </div>
+          <div>
+            <p className="text-xs tracking-[0.24em] text-gold uppercase">
+              {t("highlightsHeading")}
+            </p>
             {content.highlights.length === 0 ? (
-              <p className="mt-8 text-sm text-muted">{t("emptyHighlights")}</p>
+              <p className="mt-5 text-sm text-muted">{t("emptyHighlights")}</p>
             ) : (
-              <ul className="mt-8 grid gap-3 text-sm text-navy">
-                {content.highlights.map((item) => (
-                  <li key={item.id} className="border-s-2 border-gold ps-3">
-                    <span className="font-medium">
+              <ul className="mt-6 grid gap-4 sm:grid-cols-3">
+                {content.highlights.map((item, index) => (
+                  <li
+                    key={item.id}
+                    className="card-lift border border-navy/8 bg-cream p-6"
+                    style={{ animationDelay: `${index * 80}ms` }}
+                  >
+                    <p className="text-[0.65rem] tracking-[0.2em] text-gold">
+                      {String(index + 1).padStart(2, "0")}
+                    </p>
+                    <h2 className="font-display mt-3 text-2xl text-navy">
                       {locale === "ar" ? item.titleAr : item.titleEn}
-                    </span>
-                    <span className="mt-1 block text-ink/75">
+                    </h2>
+                    <p className="mt-3 text-sm leading-7 text-ink/70">
                       {locale === "ar" ? item.textAr : item.textEn}
-                    </span>
+                    </p>
                   </li>
                 ))}
               </ul>
             )}
           </div>
-          <aside className="border border-gold/30 bg-ivory p-8">
-            <p className="text-xs tracking-[0.2em] text-gold uppercase">
-              {t("currentRole")}
-            </p>
-            <p className="mt-3 font-display text-2xl text-navy">
-              {locale === "ar"
-                ? content.identity.titleAr
-                : content.identity.titleEn}
-            </p>
-            <p className="mt-3 text-ink/80">
-              {locale === "ar"
-                ? content.identity.organizationAr
-                : content.identity.organizationEn}
-            </p>
-            <p className="mt-6 text-sm text-muted">
-              {locale === "ar"
-                ? content.identity.locationAr
-                : content.identity.locationEn}
-            </p>
-          </aside>
         </div>
       </section>
 
-      <section className="bg-ivory">
-        <div className="mx-auto max-w-6xl px-5 py-20 md:px-8">
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div>
-              <h2 className="font-display text-3xl text-navy md:text-4xl">
-                {t("practiceHeading")}
-              </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-muted">
-                {t("practiceIntro")}
-              </p>
-            </div>
-            <Link
-              href={localizedPath(locale, "/practice")}
-              className="text-sm tracking-[0.12em] text-navy uppercase underline decoration-gold decoration-2 underline-offset-6"
-            >
-              {t("viewAllPractice")}
-            </Link>
-          </div>
-          {highlights.length === 0 ? (
-            <p className="mt-12 text-sm text-muted">{t("emptyPractice")}</p>
-          ) : (
-            <div className="mt-12 grid gap-5 md:grid-cols-2">
-              {highlights.map((area) => (
-                <article
-                  key={area.id}
-                  className="border border-navy/10 bg-cream p-7"
-                >
-                  <h3 className="font-display text-2xl text-navy">
-                    {locale === "ar" ? area.titleAr : area.titleEn}
-                  </h3>
-                  <p className="mt-3 text-sm leading-7 text-ink/80">
-                    {locale === "ar" ? area.descriptionAr : area.descriptionEn}
-                  </p>
-                </article>
-              ))}
-            </div>
-          )}
+      <section className="px-5 pb-8 md:px-8">
+        <div className="mx-auto max-w-6xl border border-gold/30 bg-navy px-8 py-12 text-ivory md:px-14">
+          <p className="text-xs tracking-[0.24em] text-gold-light uppercase">
+            {locale === "ar" ? content.cta.labelAr : content.cta.labelEn}
+          </p>
+          <p className="mt-4 max-w-2xl text-lg leading-8 text-ivory/80">
+            {locale === "ar" ? content.cta.textAr : content.cta.textEn}
+          </p>
+          <Link
+            href="#inquiry"
+            className="mt-8 inline-block bg-gold px-7 py-3 text-sm tracking-[0.16em] text-navy-deep uppercase"
+          >
+            {locale === "ar" ? content.cta.labelAr : content.cta.labelEn}
+          </Link>
         </div>
       </section>
 
-      <section className="bg-navy text-ivory">
-        <div className="mx-auto max-w-6xl px-5 py-16 md:px-8">
-          <div className="border border-gold/35 px-8 py-12 md:px-14">
-            <p className="text-xs tracking-[0.24em] text-gold-light uppercase">
-              {locale === "ar" ? content.cta.labelAr : content.cta.labelEn}
+      <section className="px-5 py-20 md:px-8">
+        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <h2 className="font-display text-4xl text-navy">
+              {t("inquiryHeading")}
+            </h2>
+            <p className="mt-4 max-w-sm text-base leading-8 text-muted">
+              {t("inquiryIntro")}
             </p>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-ivory/85">
-              {locale === "ar" ? content.cta.textAr : content.cta.textEn}
-            </p>
-            <Link
-              href={`${localizedPath(locale, "/contact")}#intake`}
-              className="mt-8 inline-block bg-gold px-6 py-3 text-sm tracking-[0.12em] text-navy-deep uppercase"
-            >
-              {t("navContact")}
-            </Link>
+            <dl className="mt-8 space-y-3 text-sm text-navy">
+              {content.contact.email ? (
+                <div>
+                  <dt className="text-muted">{content.contact.email}</dt>
+                </div>
+              ) : null}
+              {content.contact.phone ? (
+                <div dir="ltr" className="text-start">
+                  {content.contact.phone}
+                </div>
+              ) : null}
+              <div>
+                {locale === "ar"
+                  ? content.contact.addressAr
+                  : content.contact.addressEn}
+              </div>
+            </dl>
+          </div>
+          <div className="border border-navy/8 bg-white p-7 md:p-10">
+            <IntakeForm locale={locale} content={content} />
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

@@ -6,45 +6,24 @@ import { useRouter } from "next/navigation";
 import { COPY_FIELD_LABELS, COPY_GROUPS } from "@/lib/admin-labels";
 import type { PersistMode } from "@/lib/content";
 import type {
+  Chip,
   CopyPairKey,
-  ExperienceItem,
   Highlight,
-  IntakeSubjectItem,
-  PracticeArea,
   SiteContent,
   SiteCopy,
 } from "@/lib/types";
 
-type AdminDashboardProps = {
-  initialContent: SiteContent;
-  githubPersist: boolean;
-};
-
-type SectionId =
-  | "identity"
-  | "hero"
-  | "bio"
-  | "highlights"
-  | "experience"
-  | "credentials"
-  | "practice"
-  | "contact"
-  | "cta"
-  | "intake"
-  | "copy";
+type SectionId = "identity" | "hero" | "bio" | "chips" | "highlights" | "cta" | "contact" | "copy";
 
 const sections: { id: SectionId; label: string }[] = [
-  { id: "identity", label: "الاسم والمسميات" },
-  { id: "hero", label: "الصفحة الأولى" },
+  { id: "identity", label: "الاسم" },
+  { id: "hero", label: "المقدمة" },
   { id: "bio", label: "النبذة" },
+  { id: "chips", label: "الشريط المختصر" },
   { id: "highlights", label: "الملامح" },
-  { id: "experience", label: "المسار المهني" },
-  { id: "credentials", label: "التعليم والعضويات" },
-  { id: "practice", label: "مجالات العمل" },
-  { id: "contact", label: "التواصل" },
-  { id: "cta", label: "زر التواصل" },
-  { id: "intake", label: "موضوعات لوحة الطلب" },
-  { id: "copy", label: "نصوص الموقع كلها" },
+  { id: "cta", label: "دعوة التواصل" },
+  { id: "contact", label: "بيانات التواصل" },
+  { id: "copy", label: "نصوص الصفحة" },
 ];
 
 function Field({
@@ -63,8 +42,7 @@ function Field({
   type?: string;
 }) {
   const shared = {
-    className:
-      "w-full border border-navy/15 bg-white px-3 py-2 text-sm text-ink",
+    className: "w-full border border-navy/15 bg-white px-3 py-2 text-sm text-ink",
     value,
     onChange: (
       event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -75,11 +53,7 @@ function Field({
   return (
     <label className="grid gap-1.5 text-sm text-navy">
       <span className="font-medium">{label}</span>
-      {multiline ? (
-        <textarea rows={6} {...shared} />
-      ) : (
-        <input type={type} {...shared} />
-      )}
+      {multiline ? <textarea rows={5} {...shared} /> : <input type={type} {...shared} />}
     </label>
   );
 }
@@ -101,19 +75,8 @@ function PairFields({
 }) {
   return (
     <div className="grid gap-3 md:grid-cols-2">
-      <Field
-        label={`${label} (عربي)`}
-        value={arValue}
-        onChange={onAr}
-        multiline={multiline}
-        dir="rtl"
-      />
-      <Field
-        label={`${label} (English)`}
-        value={enValue}
-        onChange={onEn}
-        multiline={multiline}
-      />
+      <Field label={`${label} (عربي)`} value={arValue} onChange={onAr} multiline={multiline} dir="rtl" />
+      <Field label={`${label} (English)`} value={enValue} onChange={onEn} multiline={multiline} />
     </div>
   );
 }
@@ -121,7 +84,10 @@ function PairFields({
 export function AdminDashboard({
   initialContent,
   githubPersist,
-}: AdminDashboardProps) {
+}: {
+  initialContent: SiteContent;
+  githubPersist: boolean;
+}) {
   const router = useRouter();
   const [content, setContent] = useState<SiteContent>(initialContent);
   const [section, setSection] = useState<SectionId>("identity");
@@ -131,185 +97,23 @@ export function AdminDashboard({
 
   const persistNote = useMemo(() => {
     if (persist === "file") {
-      return "تم الحفظ في ملف المحتوى. حدّث الصفحة العامة لترى التغيير.";
+      return "تم الحفظ. حدّث الصفحة العامة لترى التغيير.";
     }
     if (persist === "github") {
-      return "تم الحفظ. سيظهر التحديث بعد إعادة النشر.";
+      return "تم الحفظ.";
     }
     if (persist === "ephemeral") {
-      return "حُفظ مؤقتاً في هذه الجلسة. حمّل الملف واحفظه إن لزم.";
+      return "حُفظ مؤقتاً. حمّل الملف إن لزم.";
     }
     return githubPersist
       ? "الحفظ يحدّث ملف المحتوى."
       : "الحفظ يكتب ملف المحتوى على هذا الجهاز.";
   }, [persist, githubPersist]);
 
-  function updateIdentity(key: keyof SiteContent["identity"], value: string) {
-    setContent((current) => ({
-      ...current,
-      identity: { ...current.identity, [key]: value },
-    }));
-  }
-
-  function updateHero(key: keyof SiteContent["hero"], value: string) {
-    setContent((current) => ({
-      ...current,
-      hero: { ...current.hero, [key]: value },
-    }));
-  }
-
-  function updateBio(key: keyof SiteContent["bio"], value: string) {
-    setContent((current) => ({
-      ...current,
-      bio: { ...current.bio, [key]: value },
-    }));
-  }
-
   function updateCopy(key: keyof SiteCopy, value: string) {
     setContent((current) => ({
       ...current,
       copy: { ...current.copy, [key]: value },
-    }));
-  }
-
-  function updatePractice(index: number, patch: Partial<PracticeArea>) {
-    setContent((current) => ({
-      ...current,
-      practiceAreas: current.practiceAreas.map((area, i) =>
-        i === index ? { ...area, ...patch } : area,
-      ),
-    }));
-  }
-
-  function updateHighlight(index: number, patch: Partial<Highlight>) {
-    setContent((current) => ({
-      ...current,
-      highlights: current.highlights.map((item, i) =>
-        i === index ? { ...item, ...patch } : item,
-      ),
-    }));
-  }
-
-  function addHighlight() {
-    setContent((current) => ({
-      ...current,
-      highlights: [
-        ...current.highlights,
-        {
-          id: `highlight-${crypto.randomUUID()}`,
-          titleAr: "",
-          titleEn: "",
-          textAr: "",
-          textEn: "",
-        },
-      ],
-    }));
-  }
-
-  function removeHighlight(index: number) {
-    setContent((current) => ({
-      ...current,
-      highlights: current.highlights.filter((_, i) => i !== index),
-    }));
-  }
-
-  function updateExperience(index: number, patch: Partial<ExperienceItem>) {
-    setContent((current) => ({
-      ...current,
-      experience: current.experience.map((item, i) =>
-        i === index ? { ...item, ...patch } : item,
-      ),
-    }));
-  }
-
-  function addExperience() {
-    setContent((current) => ({
-      ...current,
-      experience: [
-        ...current.experience,
-        {
-          id: `role-${crypto.randomUUID()}`,
-          periodAr: "",
-          periodEn: "",
-          titleAr: "",
-          titleEn: "",
-          descriptionAr: "",
-          descriptionEn: "",
-        },
-      ],
-    }));
-  }
-
-  function removeExperience(index: number) {
-    setContent((current) => ({
-      ...current,
-      experience: current.experience.filter((_, i) => i !== index),
-    }));
-  }
-
-  function addPractice() {
-    setContent((current) => ({
-      ...current,
-      practiceAreas: [
-        ...current.practiceAreas,
-        {
-          id: `area-${crypto.randomUUID()}`,
-          titleAr: "",
-          titleEn: "",
-          descriptionAr: "",
-          descriptionEn: "",
-        },
-      ],
-    }));
-  }
-
-  function removePractice(index: number) {
-    setContent((current) => ({
-      ...current,
-      practiceAreas: current.practiceAreas.filter((_, i) => i !== index),
-    }));
-  }
-
-  function movePractice(index: number, direction: -1 | 1) {
-    setContent((current) => {
-      const next = [...current.practiceAreas];
-      const target = index + direction;
-      if (target < 0 || target >= next.length) {
-        return current;
-      }
-      const [item] = next.splice(index, 1);
-      next.splice(target, 0, item);
-      return { ...current, practiceAreas: next };
-    });
-  }
-
-  function updateSubject(index: number, patch: Partial<IntakeSubjectItem>) {
-    setContent((current) => ({
-      ...current,
-      intakeSubjects: current.intakeSubjects.map((item, i) =>
-        i === index ? { ...item, ...patch } : item,
-      ),
-    }));
-  }
-
-  function addSubject() {
-    setContent((current) => ({
-      ...current,
-      intakeSubjects: [
-        ...current.intakeSubjects,
-        {
-          id: `subject-${crypto.randomUUID()}`,
-          labelAr: "",
-          labelEn: "",
-        },
-      ],
-    }));
-  }
-
-  function removeSubject(index: number) {
-    setContent((current) => ({
-      ...current,
-      intakeSubjects: current.intakeSubjects.filter((_, i) => i !== index),
     }));
   }
 
@@ -363,28 +167,17 @@ export function AdminDashboard({
       <header className="border-b border-gold/30 bg-navy text-ivory">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-4">
           <div>
-            <h1 className="font-display text-2xl">تعديل نصوص الموقع</h1>
+            <h1 className="font-display text-2xl">تعديل الصفحة</h1>
             <p className="mt-1 text-xs text-gold-pale">خاص بك — لا يظهر للزوار</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Link
-              href="/"
-              className="border border-gold/40 px-3 py-2 text-sm text-ivory"
-            >
+            <Link href="/" className="border border-gold/40 px-3 py-2 text-sm text-ivory">
               عرض الموقع
             </Link>
-            <button
-              type="button"
-              onClick={downloadJson}
-              className="border border-gold/40 px-3 py-2 text-sm"
-            >
+            <button type="button" onClick={downloadJson} className="border border-gold/40 px-3 py-2 text-sm">
               تنزيل الملف
             </button>
-            <button
-              type="button"
-              onClick={logout}
-              className="border border-gold/40 px-3 py-2 text-sm"
-            >
+            <button type="button" onClick={logout} className="border border-gold/40 px-3 py-2 text-sm">
               خروج
             </button>
             <button
@@ -407,9 +200,7 @@ export function AdminDashboard({
               type="button"
               onClick={() => setSection(item.id)}
               className={`px-3 py-2 text-start text-sm ${
-                section === item.id
-                  ? "bg-navy text-ivory"
-                  : "bg-white text-navy hover:bg-gold-pale/40"
+                section === item.id ? "bg-navy text-ivory" : "bg-white text-navy hover:bg-gold-pale/40"
               }`}
             >
               {item.label}
@@ -425,73 +216,88 @@ export function AdminDashboard({
 
           {section === "identity" ? (
             <section className="grid gap-4 bg-white p-6">
-              <h2 className="font-display text-2xl text-navy">الاسم والمسميات</h2>
+              <h2 className="font-display text-2xl text-navy">الاسم</h2>
               <PairFields
                 label="الاسم الكامل"
                 arValue={content.identity.nameAr}
                 enValue={content.identity.nameEn}
-                onAr={(value) => updateIdentity("nameAr", value)}
-                onEn={(value) => updateIdentity("nameEn", value)}
+                onAr={(value) =>
+                  setContent((c) => ({ ...c, identity: { ...c.identity, nameAr: value } }))
+                }
+                onEn={(value) =>
+                  setContent((c) => ({ ...c, identity: { ...c.identity, nameEn: value } }))
+                }
               />
               <PairFields
-                label="الاسم المختصر في أعلى الصفحة"
+                label="الاسم المختصر"
                 arValue={content.identity.shortNameAr}
                 enValue={content.identity.shortNameEn}
-                onAr={(value) => updateIdentity("shortNameAr", value)}
-                onEn={(value) => updateIdentity("shortNameEn", value)}
+                onAr={(value) =>
+                  setContent((c) => ({ ...c, identity: { ...c.identity, shortNameAr: value } }))
+                }
+                onEn={(value) =>
+                  setContent((c) => ({ ...c, identity: { ...c.identity, shortNameEn: value } }))
+                }
               />
               <Field
-                label="الحرفان في المربع الذهبي"
+                label="الحرفان في المربع"
                 value={content.identity.monogram}
-                onChange={(value) => updateIdentity("monogram", value)}
+                onChange={(value) =>
+                  setContent((c) => ({ ...c, identity: { ...c.identity, monogram: value } }))
+                }
               />
               <PairFields
-                label="المسمى"
+                label="المسمّى"
                 arValue={content.identity.titleAr}
                 enValue={content.identity.titleEn}
-                onAr={(value) => updateIdentity("titleAr", value)}
-                onEn={(value) => updateIdentity("titleEn", value)}
-              />
-              <PairFields
-                label="الجهة أو القطاع (بدون اسم شركة)"
-                arValue={content.identity.organizationAr}
-                enValue={content.identity.organizationEn}
-                onAr={(value) => updateIdentity("organizationAr", value)}
-                onEn={(value) => updateIdentity("organizationEn", value)}
+                onAr={(value) =>
+                  setContent((c) => ({ ...c, identity: { ...c.identity, titleAr: value } }))
+                }
+                onEn={(value) =>
+                  setContent((c) => ({ ...c, identity: { ...c.identity, titleEn: value } }))
+                }
               />
               <PairFields
                 label="المقر"
                 arValue={content.identity.locationAr}
                 enValue={content.identity.locationEn}
-                onAr={(value) => updateIdentity("locationAr", value)}
-                onEn={(value) => updateIdentity("locationEn", value)}
+                onAr={(value) =>
+                  setContent((c) => ({ ...c, identity: { ...c.identity, locationAr: value } }))
+                }
+                onEn={(value) =>
+                  setContent((c) => ({ ...c, identity: { ...c.identity, locationEn: value } }))
+                }
               />
             </section>
           ) : null}
 
           {section === "hero" ? (
             <section className="grid gap-4 bg-white p-6">
-              <h2 className="font-display text-2xl text-navy">الصفحة الأولى</h2>
+              <h2 className="font-display text-2xl text-navy">المقدمة</h2>
               <PairFields
-                label="السطر الصغير فوق الاسم"
+                label="السطر الصغير"
                 arValue={content.hero.eyebrowAr}
                 enValue={content.hero.eyebrowEn}
-                onAr={(value) => updateHero("eyebrowAr", value)}
-                onEn={(value) => updateHero("eyebrowEn", value)}
+                onAr={(value) => setContent((c) => ({ ...c, hero: { ...c.hero, eyebrowAr: value } }))}
+                onEn={(value) => setContent((c) => ({ ...c, hero: { ...c.hero, eyebrowEn: value } }))}
               />
               <PairFields
-                label="العنوان الكبير"
+                label="الاسم الكبير"
                 arValue={content.hero.headlineAr}
                 enValue={content.hero.headlineEn}
-                onAr={(value) => updateHero("headlineAr", value)}
-                onEn={(value) => updateHero("headlineEn", value)}
+                onAr={(value) => setContent((c) => ({ ...c, hero: { ...c.hero, headlineAr: value } }))}
+                onEn={(value) => setContent((c) => ({ ...c, hero: { ...c.hero, headlineEn: value } }))}
               />
               <PairFields
-                label="النص القصير تحت العنوان"
+                label="الجملة القصيرة"
                 arValue={content.hero.subheadlineAr}
                 enValue={content.hero.subheadlineEn}
-                onAr={(value) => updateHero("subheadlineAr", value)}
-                onEn={(value) => updateHero("subheadlineEn", value)}
+                onAr={(value) =>
+                  setContent((c) => ({ ...c, hero: { ...c.hero, subheadlineAr: value } }))
+                }
+                onEn={(value) =>
+                  setContent((c) => ({ ...c, hero: { ...c.hero, subheadlineEn: value } }))
+                }
                 multiline
               />
             </section>
@@ -501,21 +307,76 @@ export function AdminDashboard({
             <section className="grid gap-4 bg-white p-6">
               <h2 className="font-display text-2xl text-navy">النبذة</h2>
               <PairFields
-                label="نبذة قصيرة (الصفحة الأولى)"
+                label="فقرة قصيرة"
                 arValue={content.bio.shortAr}
                 enValue={content.bio.shortEn}
-                onAr={(value) => updateBio("shortAr", value)}
-                onEn={(value) => updateBio("shortEn", value)}
+                onAr={(value) => setContent((c) => ({ ...c, bio: { ...c.bio, shortAr: value } }))}
+                onEn={(value) => setContent((c) => ({ ...c, bio: { ...c.bio, shortEn: value } }))}
                 multiline
               />
-              <PairFields
-                label="نبذة صفحة «نبذة»"
-                arValue={content.bio.longAr}
-                enValue={content.bio.longEn}
-                onAr={(value) => updateBio("longAr", value)}
-                onEn={(value) => updateBio("longEn", value)}
-                multiline
-              />
+            </section>
+          ) : null}
+
+          {section === "chips" ? (
+            <section className="grid gap-4">
+              <div className="flex items-center justify-between">
+                <h2 className="font-display text-2xl text-navy">الشريط المختصر</h2>
+                <button
+                  type="button"
+                  className="bg-navy px-3 py-2 text-sm text-ivory"
+                  onClick={() =>
+                    setContent((c) => ({
+                      ...c,
+                      chips: [
+                        ...c.chips,
+                        { id: `chip-${crypto.randomUUID()}`, labelAr: "", labelEn: "" },
+                      ],
+                    }))
+                  }
+                >
+                  إضافة شريحة
+                </button>
+              </div>
+              {content.chips.map((item: Chip, index) => (
+                <article key={item.id} className="grid gap-3 bg-white p-5">
+                  <div className="flex justify-between">
+                    <p className="text-sm text-muted">شريحة {index + 1}</p>
+                    <button
+                      type="button"
+                      className="border border-red-300 px-2 py-1 text-xs text-red-800"
+                      onClick={() =>
+                        setContent((c) => ({
+                          ...c,
+                          chips: c.chips.filter((_, i) => i !== index),
+                        }))
+                      }
+                    >
+                      حذف
+                    </button>
+                  </div>
+                  <PairFields
+                    label="النص"
+                    arValue={item.labelAr}
+                    enValue={item.labelEn}
+                    onAr={(value) =>
+                      setContent((c) => ({
+                        ...c,
+                        chips: c.chips.map((chip, i) =>
+                          i === index ? { ...chip, labelAr: value } : chip,
+                        ),
+                      }))
+                    }
+                    onEn={(value) =>
+                      setContent((c) => ({
+                        ...c,
+                        chips: c.chips.map((chip, i) =>
+                          i === index ? { ...chip, labelEn: value } : chip,
+                        ),
+                      }))
+                    }
+                  />
+                </article>
+              ))}
             </section>
           ) : null}
 
@@ -525,23 +386,39 @@ export function AdminDashboard({
                 <h2 className="font-display text-2xl text-navy">الملامح</h2>
                 <button
                   type="button"
-                  onClick={addHighlight}
                   className="bg-navy px-3 py-2 text-sm text-ivory"
+                  onClick={() =>
+                    setContent((c) => ({
+                      ...c,
+                      highlights: [
+                        ...c.highlights,
+                        {
+                          id: `highlight-${crypto.randomUUID()}`,
+                          titleAr: "",
+                          titleEn: "",
+                          textAr: "",
+                          textEn: "",
+                        },
+                      ],
+                    }))
+                  }
                 >
                   إضافة ملمح
                 </button>
               </div>
-              <p className="text-sm text-muted">
-                جمل قصيرة. لا تضف أرقاماً ولا أسماء جهات عمل.
-              </p>
-              {content.highlights.map((item, index) => (
+              {content.highlights.map((item: Highlight, index) => (
                 <article key={item.id} className="grid gap-3 bg-white p-5">
                   <div className="flex justify-between">
                     <p className="text-sm text-muted">ملمح {index + 1}</p>
                     <button
                       type="button"
-                      onClick={() => removeHighlight(index)}
                       className="border border-red-300 px-2 py-1 text-xs text-red-800"
+                      onClick={() =>
+                        setContent((c) => ({
+                          ...c,
+                          highlights: c.highlights.filter((_, i) => i !== index),
+                        }))
+                      }
                     >
                       حذف
                     </button>
@@ -550,72 +427,42 @@ export function AdminDashboard({
                     label="العنوان"
                     arValue={item.titleAr}
                     enValue={item.titleEn}
-                    onAr={(value) => updateHighlight(index, { titleAr: value })}
-                    onEn={(value) => updateHighlight(index, { titleEn: value })}
+                    onAr={(value) =>
+                      setContent((c) => ({
+                        ...c,
+                        highlights: c.highlights.map((row, i) =>
+                          i === index ? { ...row, titleAr: value } : row,
+                        ),
+                      }))
+                    }
+                    onEn={(value) =>
+                      setContent((c) => ({
+                        ...c,
+                        highlights: c.highlights.map((row, i) =>
+                          i === index ? { ...row, titleEn: value } : row,
+                        ),
+                      }))
+                    }
                   />
                   <PairFields
                     label="النص"
                     arValue={item.textAr}
                     enValue={item.textEn}
-                    onAr={(value) => updateHighlight(index, { textAr: value })}
-                    onEn={(value) => updateHighlight(index, { textEn: value })}
-                    multiline
-                  />
-                </article>
-              ))}
-            </section>
-          ) : null}
-
-          {section === "experience" ? (
-            <section className="grid gap-4">
-              <div className="flex items-center justify-between">
-                <h2 className="font-display text-2xl text-navy">المسار المهني</h2>
-                <button
-                  type="button"
-                  onClick={addExperience}
-                  className="bg-navy px-3 py-2 text-sm text-ivory"
-                >
-                  إضافة مرحلة
-                </button>
-              </div>
-              <p className="text-sm text-muted">
-                اكتب المسمّى والقطاع فقط. لا تذكر اسم شركة أو مكتب.
-              </p>
-              {content.experience.map((item, index) => (
-                <article key={item.id} className="grid gap-3 bg-white p-5">
-                  <div className="flex justify-between">
-                    <p className="text-sm text-muted">مرحلة {index + 1}</p>
-                    <button
-                      type="button"
-                      onClick={() => removeExperience(index)}
-                      className="border border-red-300 px-2 py-1 text-xs text-red-800"
-                    >
-                      حذف
-                    </button>
-                  </div>
-                  <PairFields
-                    label="الفترة"
-                    arValue={item.periodAr}
-                    enValue={item.periodEn}
-                    onAr={(value) => updateExperience(index, { periodAr: value })}
-                    onEn={(value) => updateExperience(index, { periodEn: value })}
-                  />
-                  <PairFields
-                    label="المسمّى"
-                    arValue={item.titleAr}
-                    enValue={item.titleEn}
-                    onAr={(value) => updateExperience(index, { titleAr: value })}
-                    onEn={(value) => updateExperience(index, { titleEn: value })}
-                  />
-                  <PairFields
-                    label="الوصف"
-                    arValue={item.descriptionAr}
-                    enValue={item.descriptionEn}
                     onAr={(value) =>
-                      updateExperience(index, { descriptionAr: value })
+                      setContent((c) => ({
+                        ...c,
+                        highlights: c.highlights.map((row, i) =>
+                          i === index ? { ...row, textAr: value } : row,
+                        ),
+                      }))
                     }
                     onEn={(value) =>
-                      updateExperience(index, { descriptionEn: value })
+                      setContent((c) => ({
+                        ...c,
+                        highlights: c.highlights.map((row, i) =>
+                          i === index ? { ...row, textEn: value } : row,
+                        ),
+                      }))
                     }
                     multiline
                   />
@@ -624,309 +471,75 @@ export function AdminDashboard({
             </section>
           ) : null}
 
-          {section === "credentials" ? (
+          {section === "cta" ? (
             <section className="grid gap-4 bg-white p-6">
-              <h2 className="font-display text-2xl text-navy">
-                التعليم والعضويات
-              </h2>
+              <h2 className="font-display text-2xl text-navy">دعوة التواصل</h2>
               <PairFields
-                label="التعليم"
-                arValue={content.credentials.educationAr}
-                enValue={content.credentials.educationEn}
-                onAr={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    credentials: { ...current.credentials, educationAr: value },
-                  }))
-                }
-                onEn={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    credentials: { ...current.credentials, educationEn: value },
-                  }))
-                }
+                label="نص الزر"
+                arValue={content.cta.labelAr}
+                enValue={content.cta.labelEn}
+                onAr={(value) => setContent((c) => ({ ...c, cta: { ...c.cta, labelAr: value } }))}
+                onEn={(value) => setContent((c) => ({ ...c, cta: { ...c.cta, labelEn: value } }))}
+              />
+              <PairFields
+                label="الجملة"
+                arValue={content.cta.textAr}
+                enValue={content.cta.textEn}
+                onAr={(value) => setContent((c) => ({ ...c, cta: { ...c.cta, textAr: value } }))}
+                onEn={(value) => setContent((c) => ({ ...c, cta: { ...c.cta, textEn: value } }))}
                 multiline
               />
-              <PairFields
-                label="العضويات"
-                arValue={content.credentials.membershipsAr}
-                enValue={content.credentials.membershipsEn}
-                onAr={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    credentials: {
-                      ...current.credentials,
-                      membershipsAr: value,
-                    },
-                  }))
-                }
-                onEn={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    credentials: {
-                      ...current.credentials,
-                      membershipsEn: value,
-                    },
-                  }))
-                }
-                multiline
-              />
-              <PairFields
-                label="اللغات"
-                arValue={content.credentials.languagesAr}
-                enValue={content.credentials.languagesEn}
-                onAr={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    credentials: { ...current.credentials, languagesAr: value },
-                  }))
-                }
-                onEn={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    credentials: { ...current.credentials, languagesEn: value },
-                  }))
-                }
-              />
-            </section>
-          ) : null}
-
-          {section === "practice" ? (
-            <section className="grid gap-4">
-              <div className="flex items-center justify-between">
-                <h2 className="font-display text-2xl text-navy">مجالات العمل</h2>
-                <button
-                  type="button"
-                  onClick={addPractice}
-                  className="bg-navy px-3 py-2 text-sm text-ivory"
-                >
-                  إضافة مجال
-                </button>
-              </div>
-              {content.practiceAreas.map((area, index) => (
-                <article key={area.id} className="grid gap-3 bg-white p-5">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="text-sm text-muted">مجال {index + 1}</p>
-                    <div className="flex gap-2">
-                      <button
-                        type="button"
-                        onClick={() => movePractice(index, -1)}
-                        className="border border-navy/20 px-2 py-1 text-xs"
-                      >
-                        أعلى
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => movePractice(index, 1)}
-                        className="border border-navy/20 px-2 py-1 text-xs"
-                      >
-                        أسفل
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => removePractice(index)}
-                        className="border border-red-300 px-2 py-1 text-xs text-red-800"
-                      >
-                        حذف
-                      </button>
-                    </div>
-                  </div>
-                  <PairFields
-                    label="العنوان"
-                    arValue={area.titleAr}
-                    enValue={area.titleEn}
-                    onAr={(value) => updatePractice(index, { titleAr: value })}
-                    onEn={(value) => updatePractice(index, { titleEn: value })}
-                  />
-                  <PairFields
-                    label="الوصف"
-                    arValue={area.descriptionAr}
-                    enValue={area.descriptionEn}
-                    onAr={(value) =>
-                      updatePractice(index, { descriptionAr: value })
-                    }
-                    onEn={(value) =>
-                      updatePractice(index, { descriptionEn: value })
-                    }
-                    multiline
-                  />
-                </article>
-              ))}
             </section>
           ) : null}
 
           {section === "contact" ? (
             <section className="grid gap-4 bg-white p-6">
-              <h2 className="font-display text-2xl text-navy">التواصل</h2>
+              <h2 className="font-display text-2xl text-navy">بيانات التواصل</h2>
               <Field
-                label="البريد الإلكتروني"
+                label="البريد"
                 type="email"
                 value={content.contact.email}
                 onChange={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    contact: { ...current.contact, email: value },
-                  }))
+                  setContent((c) => ({ ...c, contact: { ...c.contact, email: value } }))
                 }
               />
               <Field
-                label="رقم الهاتف"
+                label="الهاتف"
                 value={content.contact.phone}
                 onChange={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    contact: { ...current.contact, phone: value },
-                  }))
-                }
-              />
-              <Field
-                label="رابط لينكدإن (اختياري)"
-                value={content.contact.linkedin}
-                onChange={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    contact: { ...current.contact, linkedin: value },
-                    social: { ...current.social, linkedin: value },
-                  }))
+                  setContent((c) => ({ ...c, contact: { ...c.contact, phone: value } }))
                 }
               />
               <PairFields
-                label="العنوان الظاهر للزائر"
+                label="العنوان الظاهر"
                 arValue={content.contact.addressAr}
                 enValue={content.contact.addressEn}
                 onAr={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    contact: { ...current.contact, addressAr: value },
-                  }))
+                  setContent((c) => ({ ...c, contact: { ...c.contact, addressAr: value } }))
                 }
                 onEn={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    contact: { ...current.contact, addressEn: value },
-                  }))
+                  setContent((c) => ({ ...c, contact: { ...c.contact, addressEn: value } }))
                 }
               />
               <Field
                 label="رابط خدمة النماذج المجانية (اختياري)"
                 value={content.contact.formspreeEndpoint}
                 onChange={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    contact: { ...current.contact, formspreeEndpoint: value },
+                  setContent((c) => ({
+                    ...c,
+                    contact: { ...c.contact, formspreeEndpoint: value },
                   }))
                 }
               />
-              <Field
-                label="رابط X (اختياري)"
-                value={content.social.x}
-                onChange={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    social: { ...current.social, x: value },
-                  }))
-                }
-              />
-              <Field
-                label="موقع آخر (اختياري)"
-                value={content.social.website}
-                onChange={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    social: { ...current.social, website: value },
-                  }))
-                }
-              />
-            </section>
-          ) : null}
-
-          {section === "cta" ? (
-            <section className="grid gap-4 bg-white p-6">
-              <h2 className="font-display text-2xl text-navy">زر التواصل</h2>
-              <PairFields
-                label="نص الزر"
-                arValue={content.cta.labelAr}
-                enValue={content.cta.labelEn}
-                onAr={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    cta: { ...current.cta, labelAr: value },
-                  }))
-                }
-                onEn={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    cta: { ...current.cta, labelEn: value },
-                  }))
-                }
-              />
-              <PairFields
-                label="الجملة بجانب الزر"
-                arValue={content.cta.textAr}
-                enValue={content.cta.textEn}
-                onAr={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    cta: { ...current.cta, textAr: value },
-                  }))
-                }
-                onEn={(value) =>
-                  setContent((current) => ({
-                    ...current,
-                    cta: { ...current.cta, textEn: value },
-                  }))
-                }
-                multiline
-              />
-            </section>
-          ) : null}
-
-          {section === "intake" ? (
-            <section className="grid gap-4">
-              <div className="flex items-center justify-between">
-                <h2 className="font-display text-2xl text-navy">
-                  موضوعات لوحة الطلب
-                </h2>
-                <button
-                  type="button"
-                  onClick={addSubject}
-                  className="bg-navy px-3 py-2 text-sm text-ivory"
-                >
-                  إضافة موضوع
-                </button>
-              </div>
-              {content.intakeSubjects.map((item, index) => (
-                <article key={item.id} className="grid gap-3 bg-white p-5">
-                  <div className="flex justify-between">
-                    <p className="text-sm text-muted">موضوع {index + 1}</p>
-                    <button
-                      type="button"
-                      onClick={() => removeSubject(index)}
-                      className="border border-red-300 px-2 py-1 text-xs text-red-800"
-                    >
-                      حذف
-                    </button>
-                  </div>
-                  <PairFields
-                    label="اسم الموضوع في القائمة"
-                    arValue={item.labelAr}
-                    enValue={item.labelEn}
-                    onAr={(value) => updateSubject(index, { labelAr: value })}
-                    onEn={(value) => updateSubject(index, { labelEn: value })}
-                  />
-                </article>
-              ))}
             </section>
           ) : null}
 
           {section === "copy" ? (
             <section className="grid gap-8">
               <div>
-                <h2 className="font-display text-2xl text-navy">
-                  نصوص الموقع كلها
-                </h2>
+                <h2 className="font-display text-2xl text-navy">نصوص الصفحة</h2>
                 <p className="mt-2 text-sm text-muted">
-                  هنا تعدّل عناوين القوائم والأزرار والنماذج والإخلاء ورسائل النجاح.
+                  عناوين الأقسام، حقول النموذج، ورسائل النجاح. الموضوع حقل حر يكتبه الزائر.
                 </p>
               </div>
               {COPY_GROUPS.map((group) => (
@@ -942,9 +555,7 @@ export function AdminDashboard({
                       onEn={(value) => updateCopy(`${key}En`, value)}
                       multiline={
                         key === "disclaimer" ||
-                        key === "approachText" ||
-                        key === "intakeIntro" ||
-                        key === "practiceIntro" ||
+                        key === "inquiryIntro" ||
                         key === "formMailtoHint" ||
                         key === "formSuccess" ||
                         key === "formError"

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
+import { TopBar } from "@/components/TopBar";
 import { getContent } from "@/lib/content";
 import { parseLocaleParam } from "@/lib/i18n";
 import { isLocale, makeUi } from "@/lib/types";
@@ -31,7 +31,7 @@ export default async function LocaleLayout({
       <a href="#content" className="skip-link">
         {t("skipToContent")}
       </a>
-      <Header locale={locale} content={content} />
+      <TopBar locale={locale} content={content} />
       <main id="content" className="flex-1">
         {children}
       </main>

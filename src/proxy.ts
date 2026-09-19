@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+const RETIRED = new Set(["/about", "/practice", "/contact"]);
+
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -8,6 +10,23 @@ export function proxy(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.pathname = pathname.replace(/^\/ar/, "") || "/";
     return NextResponse.redirect(url);
+  }
+
+  if (RETIRED.has(pathname)) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/";
+    url.hash = pathname === "/contact" ? "inquiry" : "";
+    return NextResponse.redirect(url);
+  }
+
+  if (pathname.startsWith("/en/")) {
+    const rest = pathname.slice(3);
+    if (RETIRED.has(rest)) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/en";
+      url.hash = rest === "/contact" ? "inquiry" : "";
+      return NextResponse.redirect(url);
+    }
   }
 
   if (pathname.startsWith("/api") || pathname.startsWith("/admin")) {

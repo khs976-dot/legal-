@@ -7,8 +7,6 @@
     "monogram": "KA",
     "titleAr": "محامٍ — الاستثمار والمعاملات والخدمات المالية",
     "titleEn": "Lawyer — Investment, Transactions & Financial Services",
-    "organizationAr": "الشؤون القانونية في قطاع التمويل والإيجار بدولة الكويت",
-    "organizationEn": "Legal affairs in Kuwait’s finance and leasing sector",
     "locationAr": "دولة الكويت",
     "locationEn": "Kuwait"
   },
@@ -17,240 +15,86 @@
     "eyebrowEn": "Professional profile",
     "headlineAr": "خالد السميري",
     "headlineEn": "Khaled AlSmairi",
-    "subheadlineAr": "محامٍ في الاستثمار والمعاملات والخدمات المالية — الكويت. الموقع تعريفي فحسب.",
-    "subheadlineEn": "A lawyer in investment, transactions, and financial services — Kuwait. This site is a profile only."
+    "subheadlineAr": "محامٍ في الاستثمار والمعاملات والخدمات المالية — الكويت.",
+    "subheadlineEn": "A lawyer in investment, transactions, and financial services — Kuwait."
   },
   "bio": {
-    "shortAr": "محامٍ يُعنى بالشؤون القانونية في قطاع التمويل والإيجار بالكويت.",
-    "shortEn": "A lawyer working in legal affairs in Kuwait’s finance and leasing sector.",
-    "longAr": "خالد السميري محامٍ ومستشار قانوني في دولة الكويت. يتولى إدارة الشؤون القانونية في قطاع التمويل والإيجار، بعد ممارسة سابقة للمحاماة.\n\nيُعنى بهيكلة الاستثمارات والتمويل والعقود. هذا الموقع ملف تعريفي فحسب، وليس منصة لاستشارة قانونية.",
-    "longEn": "Khaled AlSmairi is a lawyer and legal adviser in Kuwait. He manages legal affairs in the finance and leasing sector, after earlier practice as a lawyer.\n\nHis work covers investment and financing structures and contracts. This website is a profile only, not a place for legal advice."
+    "shortAr": "محامٍ يُعنى بالشؤون القانونية في قطاع التمويل والإيجار بالكويت. هذا الموقع ملف تعريفي موجز.",
+    "shortEn": "A lawyer working in legal affairs in Kuwait’s finance and leasing sector. This site is a short professional profile."
   },
-  "practiceAreas": [
-    {
-      "id": "investment-structuring",
-      "titleAr": "هيكلة الاستثمار والمعاملات",
-      "titleEn": "Investment & transactions",
-      "descriptionAr": "مساندة هيكلة الاستثمارات والمعاملات ووثائقها الأساسية.",
-      "descriptionEn": "Support for investment and transaction structures and core documents."
-    },
-    {
-      "id": "funds",
-      "titleAr": "صناديق الاستثمار",
-      "titleEn": "Investment funds",
-      "descriptionAr": "الجوانب القانونية لصناديق الاستثمار وإدارة الأصول.",
-      "descriptionEn": "Legal aspects of investment funds and asset management."
-    },
-    {
-      "id": "finance-contracts",
-      "titleAr": "التمويل والعقود",
-      "titleEn": "Finance & contracts",
-      "descriptionAr": "مسائل التمويل وصياغة العقود ومراجعتها.",
-      "descriptionEn": "Financing matters and contract drafting and review."
-    },
-    {
-      "id": "diligence-crossborder",
-      "titleAr": "العناية الواجبة والمعاملات العابرة للحدود",
-      "titleEn": "Due diligence & cross-border",
-      "descriptionAr": "مراجعة قانونية ومساندة معاملات ذات عنصر عابر للحدود.",
-      "descriptionEn": "Legal review and support for cross-border matters."
-    },
-    {
-      "id": "disputes",
-      "titleAr": "التقاضي والتحكيم",
-      "titleEn": "Litigation & arbitration",
-      "descriptionAr": "مسارات التقاضي والتحكيم والتسوية، دون عرض نتائج قضايا.",
-      "descriptionEn": "Litigation, arbitration, and settlement paths, without publishing outcomes."
-    }
+  "chips": [
+    { "id": "years", "labelAr": "أكثر من تسع سنوات", "labelEn": "Nine+ years" },
+    { "id": "focus-invest", "labelAr": "الاستثمار والمعاملات", "labelEn": "Investment & transactions" },
+    { "id": "focus-finance", "labelAr": "الخدمات المالية", "labelEn": "Financial services" },
+    { "id": "place", "labelAr": "دولة الكويت", "labelEn": "Kuwait" }
   ],
   "highlights": [
     {
-      "id": "h-transactions",
-      "titleAr": "معاملات استثمار وتمويل",
-      "titleEn": "Investment & financing",
-      "textAr": "عناية بمعاملات استثمار وتمويل، دون نشر أرقام أو أسماء.",
-      "textEn": "Work on investment and financing matters, without figures or names."
+      "id": "h-invest",
+      "titleAr": "هيكلة الاستثمار",
+      "titleEn": "Investment structures",
+      "textAr": "مساندة هيكلة الاستثمارات والمعاملات ووثائقها.",
+      "textEn": "Support for investment and transaction structures."
     },
     {
-      "id": "h-crossborder",
-      "titleAr": "هيكلة عابرة للحدود",
-      "titleEn": "Cross-border structures",
-      "textAr": "مساندة هياكل صناديق وكيانات في سياقات عابرة للحدود.",
-      "textEn": "Support for fund and vehicle structures across borders."
+      "id": "h-finance",
+      "titleAr": "التمويل والخدمات المالية",
+      "titleEn": "Finance",
+      "textAr": "مسائل التمويل والائتمان في إطار تعريفي موجز.",
+      "textEn": "Financing and credit matters, stated briefly."
     },
     {
-      "id": "h-operations",
-      "titleAr": "تشغيل الشؤون القانونية",
-      "titleEn": "Legal operations",
-      "textAr": "تنظيم العمل القانوني الداخلي.",
-      "textEn": "Organising internal legal work."
+      "id": "h-cross",
+      "titleAr": "المعاملات العابرة للحدود",
+      "titleEn": "Cross-border work",
+      "textAr": "عناية بمعاملات ذات عنصر خارج الكويت.",
+      "textEn": "Matters with a cross-border element."
     }
   ],
-  "experience": [
-    {
-      "id": "role-current",
-      "periodAr": "2023 — الحاضر",
-      "periodEn": "2023–present",
-      "titleAr": "مدير مساعد — الشؤون القانونية",
-      "titleEn": "Assistant Manager – Legal Affairs",
-      "descriptionAr": "إدارة الشؤون القانونية في قطاع التمويل والإيجار.",
-      "descriptionEn": "Manages legal affairs in the finance and leasing sector."
-    },
-    {
-      "id": "role-senior-researcher",
-      "periodAr": "2022",
-      "periodEn": "2022",
-      "titleAr": "باحث قانوني أول",
-      "titleEn": "Senior Legal Researcher",
-      "descriptionAr": "عمل قانوني وبحثي في القطاع نفسه.",
-      "descriptionEn": "Legal and research work in the same sector."
-    },
-    {
-      "id": "role-researcher",
-      "periodAr": "2021 — 2022",
-      "periodEn": "2021–2022",
-      "titleAr": "باحث قانوني",
-      "titleEn": "Legal Researcher",
-      "descriptionAr": "عمل قانوني وبحثي في قطاع التمويل والإيجار.",
-      "descriptionEn": "Legal and research work in finance and leasing."
-    },
-    {
-      "id": "role-lawyer",
-      "periodAr": "2017 — 2021",
-      "periodEn": "2017–2021",
-      "titleAr": "محامٍ",
-      "titleEn": "Lawyer",
-      "descriptionAr": "ممارسة المحاماة في الكويت.",
-      "descriptionEn": "Practised as a lawyer in Kuwait."
-    }
-  ],
-  "credentials": {
-    "educationAr": "ليسانس الحقوق، كلية الكويت للقانون الدولي (2013–2017).",
-    "educationEn": "LL.B., Kuwait International Law School (2013–2017).",
-    "membershipsAr": "جمعية المحامين الكويتية؛ الاتحاد الدولي للمحامين (UIA)؛ محكّم معتمد لدى جمعية المحامين الكويتية.",
-    "membershipsEn": "Kuwait Bar Association; UIA; Accredited Arbitrator – Kuwait Lawyers Association.",
-    "languagesAr": "العربية لغة أم، والإنجليزية بطلاقة.",
-    "languagesEn": "Arabic (native), English (fluent)."
+  "cta": {
+    "labelAr": "تواصل",
+    "labelEn": "Get in touch",
+    "textAr": "للتواصل المهني. إرسال الطلب لا يُنشئ علاقة مهنية.",
+    "textEn": "For professional contact. Sending a request does not create a mandate."
   },
   "contact": {
     "email": "khs.976@outlook.com",
     "phone": "+965 97677727",
-    "linkedin": "",
     "addressAr": "دولة الكويت",
     "addressEn": "Kuwait",
     "formspreeEndpoint": ""
   },
-  "social": {
-    "linkedin": "",
-    "x": "",
-    "website": ""
-  },
-  "cta": {
-    "labelAr": "طلب تواصل",
-    "labelEn": "Request contact",
-    "textAr": "يُرحَّب بطلب تواصل بشأن استشارة أو عقد أو دعوى. إرسال الطلب ليس استشارة قانونية.",
-    "textEn": "A contact request about advice, a contract, or a claim is welcome. Sending a request is not legal advice."
-  },
-  "intakeSubjects": [
-    {
-      "id": "consultation",
-      "labelAr": "استشارة",
-      "labelEn": "Consultation"
-    },
-    {
-      "id": "contract",
-      "labelAr": "صياغة عقد",
-      "labelEn": "Contract drafting"
-    },
-    {
-      "id": "claim",
-      "labelAr": "دعوى",
-      "labelEn": "Claim"
-    }
-  ],
   "copy": {
     "skipToContentAr": "تخطي إلى المحتوى",
     "skipToContentEn": "Skip to content",
-    "navHomeAr": "الرئيسية",
-    "navHomeEn": "Home",
-    "navAboutAr": "نبذة",
-    "navAboutEn": "About",
-    "navPracticeAr": "مجالات العمل",
-    "navPracticeEn": "Practice",
-    "navContactAr": "التواصل",
-    "navContactEn": "Contact",
-    "navAriaAr": "القائمة الرئيسية",
-    "navAriaEn": "Primary",
     "languageAr": "اللغة",
     "languageEn": "Language",
     "languageToggleArLabelAr": "عربي",
     "languageToggleArLabelEn": "عربي",
     "languageToggleEnLabelAr": "EN",
     "languageToggleEnLabelEn": "EN",
-    "openMenuAr": "فتح القائمة",
-    "openMenuEn": "Open menu",
-    "closeMenuAr": "إغلاق القائمة",
-    "closeMenuEn": "Close menu",
-    "profileBadgeAr": "ملف مهني",
-    "profileBadgeEn": "Professional profile",
-    "currentRoleAr": "المنصب",
-    "currentRoleEn": "Role",
-    "locationLabelAr": "المقر",
-    "locationLabelEn": "Location",
-    "practiceHeadingAr": "مجالات العمل",
-    "practiceHeadingEn": "Practice",
-    "practiceIntroAr": "مجالات يُعنى بها الملف المهني.",
-    "practiceIntroEn": "Areas this profile covers.",
-    "viewAllPracticeAr": "كل المجالات",
-    "viewAllPracticeEn": "All areas",
-    "aboutHeadingAr": "نبذة",
-    "aboutHeadingEn": "About",
-    "aboutLeadAr": "تعريف موجز.",
-    "aboutLeadEn": "A short introduction.",
-    "homeCtaSecondaryAr": "نبذة أوفى",
-    "homeCtaSecondaryEn": "Read more",
-    "highlightsHeadingAr": "ملامح",
-    "highlightsHeadingEn": "Notes",
+    "bioHeadingAr": "نبذة",
+    "bioHeadingEn": "Profile",
+    "trustHeadingAr": "باختصار",
+    "trustHeadingEn": "At a glance",
+    "highlightsHeadingAr": "مجالات الاهتمام",
+    "highlightsHeadingEn": "Focus",
+    "emptyChipsAr": "لا توجد عناصر بعد.",
+    "emptyChipsEn": "Nothing added yet.",
     "emptyHighlightsAr": "لا توجد ملامح بعد.",
     "emptyHighlightsEn": "No notes yet.",
-    "emptyPracticeAr": "لا توجد مجالات بعد.",
-    "emptyPracticeEn": "No practice areas yet.",
-    "glanceHeadingAr": "بطاقة تعريف",
-    "glanceHeadingEn": "At a glance",
-    "experienceHeadingAr": "المسار المهني",
-    "experienceHeadingEn": "Path",
-    "educationHeadingAr": "التعليم",
-    "educationHeadingEn": "Education",
-    "membershipsHeadingAr": "العضويات",
-    "membershipsHeadingEn": "Memberships",
-    "languagesHeadingAr": "اللغات",
-    "languagesHeadingEn": "Languages",
-    "approachHeadingAr": "منهج العمل",
-    "approachHeadingEn": "Approach",
-    "approachTextAr": "صياغة دقيقة، وفصل واضح بين الملف التعريفي وأي مشورة فردية.",
-    "approachTextEn": "Careful drafting, and a clear line between this profile and any individual advice.",
-    "contactEmailAr": "البريد",
-    "contactEmailEn": "Email",
-    "contactPhoneAr": "الهاتف",
-    "contactPhoneEn": "Telephone",
-    "contactLinkedinAr": "لينكدإن",
-    "contactLinkedinEn": "LinkedIn",
-    "contactAddressAr": "العنوان",
-    "contactAddressEn": "Address",
-    "notProvidedAr": "غير مضاف",
-    "notProvidedEn": "Not added",
-    "intakeHeadingAr": "لوحة الطلب",
-    "intakeHeadingEn": "Request",
-    "intakeIntroAr": "الاسم، الموضوع، ورقم الهاتف. هذا ليس تقديم استشارة قانونية.",
-    "intakeIntroEn": "Name, subject, and telephone. This is not legal advice.",
+    "inquiryHeadingAr": "تواصل",
+    "inquiryHeadingEn": "Get in touch",
+    "inquiryIntroAr": "الاسم، الموضوع، ورقم الهاتف.",
+    "inquiryIntroEn": "Name, subject, and telephone.",
     "formNameAr": "الاسم",
     "formNameEn": "Name",
     "formSubjectAr": "الموضوع",
     "formSubjectEn": "Subject",
     "formPhoneAr": "رقم الهاتف",
     "formPhoneEn": "Telephone",
-    "formSubmitAr": "إرسال الطلب",
-    "formSubmitEn": "Send request",
+    "formSubmitAr": "إرسال",
+    "formSubmitEn": "Send",
     "formMailtoHintAr": "قد يُفتح برنامج البريد لديك. يمكنك أيضاً نسخ نص الطلب.",
     "formMailtoHintEn": "Your email app may open. You can also copy the request.",
     "formSuccessAr": "تم إرسال طلبك. سيتم التواصل معك.",
@@ -259,17 +103,17 @@
     "formCopyEn": "Copy request text",
     "formCopiedAr": "تم النسخ",
     "formCopiedEn": "Copied",
-    "requiredAr": "مطلوب",
-    "requiredEn": "Required",
     "formErrorAr": "تعذّر الإرسال. حاول لاحقاً أو اتصل مباشرة.",
     "formErrorEn": "Could not send. Try again or call directly.",
-    "disclaimerAr": "هذا الموقع تعريفي فحسب. لا يُعد استشارة قانونية، ولا يُنشئ علاقة محامٍ بموكل.",
-    "disclaimerEn": "This website is a professional profile only. It is not legal advice and does not create a lawyer–client relationship.",
+    "requiredAr": "مطلوب",
+    "requiredEn": "Required",
+    "disclaimerAr": "هذا الموقع ملف تعريفي. لا يُعد مشورة قانونية، ولا يُنشئ علاقة محامٍ بموكل.",
+    "disclaimerEn": "This website is a professional profile. It is not legal advice and does not create a lawyer–client relationship.",
     "footerRightsAr": "جميع الحقوق محفوظة",
     "footerRightsEn": "All rights reserved",
     "notFoundTitleAr": "الصفحة غير موجودة",
     "notFoundTitleEn": "Page not found",
-    "notFoundHomeAr": "العودة إلى الرئيسية",
-    "notFoundHomeEn": "Return home"
+    "notFoundHomeAr": "العودة",
+    "notFoundHomeEn": "Return"
   }
 }

@@ -9,27 +9,29 @@ export function LanguageSwitcher({
   locale,
   content,
   className = "",
+  ariaLabel,
 }: {
   locale: Locale;
   content: SiteContent;
   className?: string;
+  ariaLabel?: string;
 }) {
   const pathname = usePathname() || "/";
   const t = makeUi(content, locale);
 
   return (
     <div
-      className={`inline-flex items-center gap-1 rounded-full border border-gold/35 px-2 py-1 text-[0.72rem] tracking-[0.14em] uppercase ${className}`}
+      className={`inline-flex items-center gap-0.5 rounded-full border border-navy/10 bg-white/70 px-1.5 py-1 text-[0.7rem] tracking-[0.14em] uppercase backdrop-blur ${className}`}
       role="navigation"
-      aria-label={t("language")}
+      aria-label={ariaLabel || t("language")}
     >
       <Link
         href={switchLocalePath(pathname, "ar")}
         hrefLang="ar"
-        className={`rounded-full px-2 py-0.5 ${
+        className={`rounded-full px-2.5 py-0.5 ${
           locale === "ar"
-            ? "bg-gold text-navy-deep"
-            : "text-gold-pale hover:text-gold-light"
+            ? "bg-navy text-ivory"
+            : "text-navy/55 hover:text-navy"
         }`}
         aria-current={locale === "ar" ? "true" : undefined}
       >
@@ -38,10 +40,10 @@ export function LanguageSwitcher({
       <Link
         href={switchLocalePath(pathname, "en")}
         hrefLang="en"
-        className={`rounded-full px-2 py-0.5 ${
+        className={`rounded-full px-2.5 py-0.5 ${
           locale === "en"
-            ? "bg-gold text-navy-deep"
-            : "text-gold-pale hover:text-gold-light"
+            ? "bg-navy text-ivory"
+            : "text-navy/55 hover:text-navy"
         }`}
         aria-current={locale === "en" ? "true" : undefined}
       >

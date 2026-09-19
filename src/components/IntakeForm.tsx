@@ -37,7 +37,6 @@ export function IntakeForm({
       const result = (await response.json().catch(() => null)) as {
         mailto?: string;
         copyText?: string;
-        ok?: boolean;
       } | null;
 
       if (!response.ok) {
@@ -75,7 +74,7 @@ export function IntakeForm({
   }
 
   return (
-    <form id="intake" onSubmit={onSubmit} className="grid gap-5">
+    <form id="inquiry" onSubmit={onSubmit} className="grid gap-5">
       <div className="grid gap-2">
         <label htmlFor="name" className="text-sm font-medium text-navy">
           {t("formName")} <span className="text-gold">{t("required")}</span>
@@ -85,29 +84,20 @@ export function IntakeForm({
           name="name"
           required
           autoComplete="name"
-          className="border border-navy/15 bg-cream px-4 py-3 text-ink"
+          className="border border-navy/12 bg-cream px-4 py-3 text-ink"
         />
       </div>
       <div className="grid gap-2">
         <label htmlFor="subject" className="text-sm font-medium text-navy">
           {t("formSubject")} <span className="text-gold">{t("required")}</span>
         </label>
-        <select
+        <input
           id="subject"
           name="subject"
           required
-          defaultValue=""
-          className="border border-navy/15 bg-cream px-4 py-3 text-ink"
-        >
-          <option value="" disabled>
-            {t("formSubject")}
-          </option>
-          {content.intakeSubjects.map((item) => (
-            <option key={item.id} value={item.id}>
-              {locale === "ar" ? item.labelAr : item.labelEn}
-            </option>
-          ))}
-        </select>
+          autoComplete="off"
+          className="border border-navy/12 bg-cream px-4 py-3 text-ink"
+        />
       </div>
       <div className="grid gap-2">
         <label htmlFor="phone" className="text-sm font-medium text-navy">
@@ -120,13 +110,13 @@ export function IntakeForm({
           required
           autoComplete="tel"
           dir="ltr"
-          className="border border-navy/15 bg-cream px-4 py-3 text-ink"
+          className="border border-navy/12 bg-cream px-4 py-3 text-ink"
         />
       </div>
       <button
         type="submit"
         disabled={pending}
-        className="justify-self-start bg-navy px-6 py-3 text-sm tracking-[0.12em] text-ivory uppercase transition-colors hover:bg-navy-mid disabled:opacity-60"
+        className="justify-self-start bg-navy px-7 py-3 text-sm tracking-[0.14em] text-ivory uppercase disabled:opacity-60"
       >
         {t("formSubmit")}
       </button>
