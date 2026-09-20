@@ -1,3 +1,3 @@
 # Local preview screenshots
 
-Captured from `npm run dev` on this branch. The site is **not** production-deployed.
+One-page public site and private admin, captured from `npm run dev`. Not production-deployed.

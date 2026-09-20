@@ -21,7 +21,7 @@ export function LanguageSwitcher({
 
   return (
     <div
-      className={`inline-flex items-center gap-0.5 rounded-full border border-navy/10 bg-white/70 px-1.5 py-1 text-[0.7rem] tracking-[0.14em] uppercase backdrop-blur ${className}`}
+      className={`inline-flex items-center gap-0.5 rounded-full border border-gold/30 bg-navy-deep/40 px-1.5 py-1 text-[0.7rem] tracking-[0.14em] uppercase backdrop-blur ${className}`}
       role="navigation"
       aria-label={ariaLabel || t("language")}
     >
@@ -30,8 +30,8 @@ export function LanguageSwitcher({
         hrefLang="ar"
         className={`rounded-full px-2.5 py-0.5 ${
           locale === "ar"
-            ? "bg-navy text-ivory"
-            : "text-navy/55 hover:text-navy"
+            ? "bg-gold text-navy-deep"
+            : "text-ivory/60 hover:text-ivory"
         }`}
         aria-current={locale === "ar" ? "true" : undefined}
       >
@@ -42,8 +42,8 @@ export function LanguageSwitcher({
         hrefLang="en"
         className={`rounded-full px-2.5 py-0.5 ${
           locale === "en"
-            ? "bg-navy text-ivory"
-            : "text-navy/55 hover:text-navy"
+            ? "bg-gold text-navy-deep"
+            : "text-ivory/60 hover:text-ivory"
         }`}
         aria-current={locale === "en" ? "true" : undefined}
       >

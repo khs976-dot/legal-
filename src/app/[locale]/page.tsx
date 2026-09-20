@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { HeroScene } from "@/components/HeroScene";
+import { HeroLanding } from "@/components/HeroLanding";
 import { IntakeForm } from "@/components/IntakeForm";
 import { getContent } from "@/lib/content";
 import { parseLocaleParam } from "@/lib/i18n";
@@ -18,44 +18,10 @@ export default async function HomePage({
   const locale = parseLocaleParam(rawLocale);
   const content = await getContent();
   const t = makeUi(content, locale);
-  const otherName =
-    locale === "ar" ? content.identity.nameEn : content.identity.nameAr;
 
   return (
     <div className="bg-ivory">
-      <section className="relative overflow-hidden px-5 pb-20 pt-28 md:px-8 md:pb-28 md:pt-32">
-        <div className="hero-wash" aria-hidden="true" />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="rise">
-            <p className="text-xs tracking-[0.32em] text-gold uppercase">
-              {locale === "ar" ? content.hero.eyebrowAr : content.hero.eyebrowEn}
-            </p>
-            <h1 className="font-display mt-5 text-5xl leading-[1.15] text-navy md:text-7xl">
-              {locale === "ar"
-                ? content.hero.headlineAr
-                : content.hero.headlineEn}
-            </h1>
-            <p className="mt-3 text-lg text-navy/45">{otherName}</p>
-            <p className="mt-6 max-w-xl text-base leading-8 text-ink/75 md:text-lg">
-              {locale === "ar"
-                ? content.hero.subheadlineAr
-                : content.hero.subheadlineEn}
-            </p>
-            <p className="mt-3 text-sm text-muted">
-              {locale === "ar"
-                ? content.identity.titleAr
-                : content.identity.titleEn}
-            </p>
-            <Link
-              href="#inquiry"
-              className="mt-10 inline-flex bg-navy px-7 py-3 text-sm tracking-[0.16em] text-ivory uppercase"
-            >
-              {locale === "ar" ? content.cta.labelAr : content.cta.labelEn}
-            </Link>
-          </div>
-          <HeroScene />
-        </div>
-      </section>
+      <HeroLanding locale={locale} content={content} />
 
       <section className="border-y border-navy/8 bg-cream">
         <div className="mx-auto max-w-6xl px-5 py-12 md:px-8">
