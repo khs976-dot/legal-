@@ -34,8 +34,8 @@ void main() {
   float veins = pow(abs(sin(a * 5.0 + t * 0.7 + r * 3.0)), 10.0);
   float sweep = pow(max(0.0, sin(a * 2.0 + t * 1.35)), 14.0);
   float bloom = exp(-r * 2.6) * (0.55 + 0.45 * sin(t * 0.9));
-  float gold = rings * 0.08 + veins * 0.16 + sweep * 0.22 + bloom * 0.28;
-  gold *= smoothstep(1.25, 0.12, r);
+  float gold = rings * 0.16 + veins * 0.28 + sweep * 0.38 + bloom * 0.42;
+  gold *= smoothstep(1.25, 0.08, r);
   vec3 deep = vec3(0.016, 0.043, 0.078);
   vec3 mid = vec3(0.043, 0.122, 0.227);
   vec3 navy = mix(deep, mid, clamp(uv.y * 1.1 + 0.08, 0.0, 1.0));
@@ -254,9 +254,9 @@ export function HeroLanding({ locale, content }: HeroLandingProps) {
     }
 
     const mobile = window.matchMedia("(max-width: 767px)").matches;
-    const moteCount = mobile ? 48 : 132;
-    const streakCount = mobile ? 12 : 34;
-    const sparkCount = mobile ? 6 : 14;
+    const moteCount = mobile ? 56 : 150;
+    const streakCount = mobile ? 16 : 42;
+    const sparkCount = mobile ? 8 : 18;
     let width = 0;
     let height = 0;
     let tick = 0;
@@ -265,18 +265,18 @@ export function HeroLanding({ locale, content }: HeroLandingProps) {
       x: Math.random(),
       y: Math.random(),
       z: 0.25 + Math.random() * 0.75,
-      r: 0.5 + Math.random() * 1.9,
+      r: 1.1 + Math.random() * 2.6,
       drift: -0.05 - Math.random() * 0.12,
     }));
 
     const streaks = Array.from({ length: streakCount }, () => ({
       x: Math.random(),
       y: Math.random(),
-      len: 28 + Math.random() * 90,
-      w: 0.6 + Math.random() * 1.4,
-      speed: 0.0035 + Math.random() * 0.007,
+      len: 42 + Math.random() * 120,
+      w: 1.1 + Math.random() * 2.2,
+      speed: 0.004 + Math.random() * 0.009,
       angle: -0.55 - Math.random() * 0.35,
-      alpha: 0.18 + Math.random() * 0.38,
+      alpha: 0.32 + Math.random() * 0.48,
     }));
 
     const sparks = Array.from({ length: sparkCount }, () => ({
@@ -339,10 +339,10 @@ export function HeroLanding({ locale, content }: HeroLandingProps) {
         }
         const px = mote.x * width;
         const py = mote.y * height;
-        const radius = mote.r * (0.7 + mote.z);
-        const alpha = 0.16 + mote.z * 0.52;
+        const radius = mote.r * (0.85 + mote.z);
+        const alpha = 0.28 + mote.z * 0.58;
         ctx.beginPath();
-        ctx.fillStyle = `rgba(224, 197, 122, ${alpha})`;
+        ctx.fillStyle = `rgba(243, 230, 195, ${alpha})`;
         ctx.arc(px, py, radius, 0, Math.PI * 2);
         ctx.fill();
       }
@@ -388,6 +388,9 @@ export function HeroLanding({ locale, content }: HeroLandingProps) {
       <div className="landing-bloom" aria-hidden="true" />
       <div className="landing-flare" aria-hidden="true" />
       <div className="landing-beams" aria-hidden="true" />
+      <span className="landing-streak landing-streak-a" aria-hidden="true" />
+      <span className="landing-streak landing-streak-b" aria-hidden="true" />
+      <span className="landing-streak landing-streak-c" aria-hidden="true" />
       <div className="landing-horizon" aria-hidden="true" />
       <div className="landing-chamber" aria-hidden="true">
         <span className="landing-halo landing-halo-a" />

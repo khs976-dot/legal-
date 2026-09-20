@@ -140,13 +140,17 @@ html[lang="ar"] .ornament::after {
 .landing-particles {
   position: absolute;
   inset: 0;
-  z-index: 1;
   pointer-events: none;
 }
 
 .landing-field {
   z-index: 0;
-  opacity: 0.88;
+  opacity: 0.95;
+}
+
+.landing-particles {
+  z-index: 4;
+  mix-blend-mode: screen;
 }
 
 .landing-bloom {
@@ -155,9 +159,9 @@ html[lang="ar"] .ornament::after {
   z-index: 2;
   pointer-events: none;
   background:
-    radial-gradient(circle at 50% 40%, rgba(224, 197, 122, 0.42), transparent 38%),
-    radial-gradient(circle at 32% 58%, rgba(196, 163, 90, 0.18), transparent 36%),
-    radial-gradient(circle at 68% 52%, rgba(243, 230, 195, 0.16), transparent 34%);
+    radial-gradient(circle at 50% 40%, rgba(224, 197, 122, 0.58), transparent 36%),
+    radial-gradient(circle at 32% 58%, rgba(196, 163, 90, 0.28), transparent 34%),
+    radial-gradient(circle at 68% 52%, rgba(243, 230, 195, 0.24), transparent 32%);
   filter: blur(10px);
   animation: bloom-pulse 5.4s ease-in-out infinite, bloom-enter 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -169,10 +173,10 @@ html[lang="ar"] .ornament::after {
   pointer-events: none;
   background: linear-gradient(
     118deg,
-    transparent 36%,
-    rgba(243, 230, 195, 0.22) 49%,
-    rgba(224, 197, 122, 0.08) 52%,
-    transparent 64%
+    transparent 32%,
+    rgba(243, 230, 195, 0.38) 48%,
+    rgba(224, 197, 122, 0.16) 53%,
+    transparent 66%
   );
   mix-blend-mode: screen;
   animation: flare-sweep 2.4s cubic-bezier(0.22, 1, 0.36, 1) both, flare-drift 9s ease-in-out 2.4s infinite;
@@ -189,6 +193,43 @@ html[lang="ar"] .ornament::after {
     conic-gradient(from 40deg at 50% 46%, transparent 0 4%, rgba(196, 163, 90, 0.08) 6%, transparent 9%);
   animation: beam-sweep 11s linear infinite;
   mix-blend-mode: screen;
+}
+
+.landing-streak {
+  position: absolute;
+  z-index: 4;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(243, 230, 195, 0.85),
+    transparent
+  );
+  filter: blur(0.4px);
+  mix-blend-mode: screen;
+}
+
+.landing-streak-a {
+  top: 24%;
+  width: 42%;
+  inset-inline-start: -10%;
+  animation: streak-fly 2.1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both, streak-fly 5.5s ease-in-out 2.4s infinite;
+}
+
+.landing-streak-b {
+  top: 58%;
+  width: 36%;
+  inset-inline-end: -8%;
+  animation: streak-fly-rev 2.3s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both, streak-fly-rev 6.2s ease-in-out 2.7s infinite;
+}
+
+.landing-streak-c {
+  top: 38%;
+  width: 28%;
+  left: 36%;
+  transform: rotate(-18deg);
+  animation: streak-fly 1.9s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both, streak-fly 4.8s ease-in-out 2.6s infinite;
 }
 
 .landing-horizon {
@@ -293,9 +334,15 @@ html[lang="ar"] .ornament::after {
   position: absolute;
   width: min(18vw, 160px);
   height: min(24vw, 210px);
-  border: 1px solid rgba(243, 230, 195, 0.28);
-  background: linear-gradient(160deg, rgba(248, 244, 235, 0.08), rgba(196, 163, 90, 0.05));
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(243, 230, 195, 0.5);
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(243, 230, 195, 0.08) 0 10px,
+      transparent 10px 18px
+    ),
+    linear-gradient(160deg, rgba(248, 244, 235, 0.16), rgba(196, 163, 90, 0.1));
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25), 0 0 28px rgba(196, 163, 90, 0.18);
 }
 
 .landing-doc-a {
@@ -331,7 +378,8 @@ html[lang="ar"] .ornament::after {
   left: 50%;
   top: 46%;
   border-radius: 50%;
-  border: 1px solid rgba(224, 197, 122, 0.28);
+  border: 2px solid rgba(224, 197, 122, 0.42);
+  box-shadow: 0 0 24px rgba(196, 163, 90, 0.18);
   translate: -50% -50%;
 }
 
@@ -407,7 +455,7 @@ html[lang="ar"] .ornament::after {
   position: absolute;
   inset: 10% -8% 6%;
   z-index: -1;
-  background: radial-gradient(ellipse at 50% 45%, rgba(5, 13, 24, 0.72), transparent 70%);
+  background: radial-gradient(ellipse at 50% 45%, rgba(5, 13, 24, 0.8), transparent 68%);
   pointer-events: none;
 }
 
@@ -609,6 +657,34 @@ html[lang="ar"] .ornament::after {
   }
 }
 
+@keyframes streak-fly {
+  from {
+    opacity: 0;
+    transform: translateX(-40%) rotate(-12deg);
+  }
+  35% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.35;
+    transform: translateX(70%) rotate(-12deg);
+  }
+}
+
+@keyframes streak-fly-rev {
+  from {
+    opacity: 0;
+    transform: translateX(40%) rotate(14deg);
+  }
+  40% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.3;
+    transform: translateX(-55%) rotate(14deg);
+  }
+}
+
 @keyframes horizon-in {
   from {
     opacity: 0;
@@ -754,6 +830,7 @@ html[lang="ar"] .ornament::after {
   .landing-bloom,
   .landing-flare,
   .landing-beams,
+  .landing-streak,
   .landing-horizon,
   .landing-vault,
   .landing-halo,
