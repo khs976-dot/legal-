@@ -1,0 +1,119 @@
+{
+  "identity": {
+    "nameAr": "خالد السميري",
+    "nameEn": "Khaled AlSmairi",
+    "shortNameAr": "خالد السميري",
+    "shortNameEn": "Khaled AlSmairi",
+    "monogram": "KA",
+    "titleAr": "محامٍ — الاستثمار والمعاملات والخدمات المالية",
+    "titleEn": "Lawyer — Investment, Transactions & Financial Services",
+    "locationAr": "دولة الكويت",
+    "locationEn": "Kuwait"
+  },
+  "hero": {
+    "eyebrowAr": "ملف مهني",
+    "eyebrowEn": "Professional profile",
+    "headlineAr": "خالد السميري",
+    "headlineEn": "Khaled AlSmairi",
+    "subheadlineAr": "محامٍ في الاستثمار والمعاملات والخدمات المالية — الكويت.",
+    "subheadlineEn": "A lawyer in investment, transactions, and financial services — Kuwait."
+  },
+  "bio": {
+    "shortAr": "محامٍ يُعنى بالشؤون القانونية في قطاع التمويل والإيجار بالكويت. هذا الموقع ملف تعريفي موجز.",
+    "shortEn": "A lawyer working in legal affairs in Kuwait’s finance and leasing sector. This site is a short professional profile."
+  },
+  "chips": [
+    { "id": "years", "labelAr": "أكثر من تسع سنوات", "labelEn": "Nine+ years" },
+    { "id": "focus-invest", "labelAr": "الاستثمار والمعاملات", "labelEn": "Investment & transactions" },
+    { "id": "focus-finance", "labelAr": "الخدمات المالية", "labelEn": "Financial services" },
+    { "id": "place", "labelAr": "دولة الكويت", "labelEn": "Kuwait" }
+  ],
+  "highlights": [
+    {
+      "id": "h-invest",
+      "titleAr": "هيكلة الاستثمار",
+      "titleEn": "Investment structures",
+      "textAr": "مساندة هيكلة الاستثمارات والمعاملات ووثائقها.",
+      "textEn": "Support for investment and transaction structures."
+    },
+    {
+      "id": "h-finance",
+      "titleAr": "التمويل والخدمات المالية",
+      "titleEn": "Finance",
+      "textAr": "مسائل التمويل والائتمان في إطار تعريفي موجز.",
+      "textEn": "Financing and credit matters, stated briefly."
+    },
+    {
+      "id": "h-cross",
+      "titleAr": "المعاملات العابرة للحدود",
+      "titleEn": "Cross-border work",
+      "textAr": "عناية بمعاملات ذات عنصر خارج الكويت.",
+      "textEn": "Matters with a cross-border element."
+    }
+  ],
+  "cta": {
+    "labelAr": "تواصل",
+    "labelEn": "Get in touch",
+    "textAr": "للتواصل المهني. إرسال الطلب لا يُنشئ علاقة مهنية.",
+    "textEn": "For professional contact. Sending a request does not create a mandate."
+  },
+  "contact": {
+    "email": "khs.976@outlook.com",
+    "phone": "+965 97677727",
+    "addressAr": "دولة الكويت",
+    "addressEn": "Kuwait",
+    "formspreeEndpoint": ""
+  },
+  "copy": {
+    "skipToContentAr": "تخطي إلى المحتوى",
+    "skipToContentEn": "Skip to content",
+    "languageAr": "اللغة",
+    "languageEn": "Language",
+    "languageToggleArLabelAr": "عربي",
+    "languageToggleArLabelEn": "عربي",
+    "languageToggleEnLabelAr": "EN",
+    "languageToggleEnLabelEn": "EN",
+    "bioHeadingAr": "نبذة",
+    "bioHeadingEn": "Profile",
+    "trustHeadingAr": "باختصار",
+    "trustHeadingEn": "At a glance",
+    "highlightsHeadingAr": "مجالات الاهتمام",
+    "highlightsHeadingEn": "Focus",
+    "emptyChipsAr": "لا توجد عناصر بعد.",
+    "emptyChipsEn": "Nothing added yet.",
+    "emptyHighlightsAr": "لا توجد ملامح بعد.",
+    "emptyHighlightsEn": "No notes yet.",
+    "inquiryHeadingAr": "تواصل",
+    "inquiryHeadingEn": "Get in touch",
+    "inquiryIntroAr": "الاسم، الموضوع، ورقم الهاتف.",
+    "inquiryIntroEn": "Name, subject, and telephone.",
+    "formNameAr": "الاسم",
+    "formNameEn": "Name",
+    "formSubjectAr": "الموضوع",
+    "formSubjectEn": "Subject",
+    "formPhoneAr": "رقم الهاتف",
+    "formPhoneEn": "Telephone",
+    "formSubmitAr": "إرسال",
+    "formSubmitEn": "Send",
+    "formMailtoHintAr": "قد يُفتح برنامج البريد لديك. يمكنك أيضاً نسخ نص الطلب.",
+    "formMailtoHintEn": "Your email app may open. You can also copy the request.",
+    "formSuccessAr": "تم إرسال طلبك. سيتم التواصل معك.",
+    "formSuccessEn": "Your request was sent. You will be contacted.",
+    "formCopyAr": "نسخ نص الطلب",
+    "formCopyEn": "Copy request text",
+    "formCopiedAr": "تم النسخ",
+    "formCopiedEn": "Copied",
+    "formErrorAr": "تعذّر الإرسال. حاول لاحقاً أو اتصل مباشرة.",
+    "formErrorEn": "Could not send. Try again or call directly.",
+    "requiredAr": "مطلوب",
+    "requiredEn": "Required",
+    "disclaimerAr": "هذا الموقع ملف تعريفي. لا يُعد مشورة قانونية، ولا يُنشئ علاقة محامٍ بموكل.",
+    "disclaimerEn": "This website is a professional profile. It is not legal advice and does not create a lawyer–client relationship.",
+    "footerRightsAr": "جميع الحقوق محفوظة",
+    "footerRightsEn": "All rights reserved",
+    "notFoundTitleAr": "الصفحة غير موجودة",
+    "notFoundTitleEn": "Page not found",
+    "notFoundHomeAr": "العودة",
+    "notFoundHomeEn": "Return"
+  }
+}
