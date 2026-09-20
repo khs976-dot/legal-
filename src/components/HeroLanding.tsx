@@ -177,8 +177,10 @@ export function HeroLanding({ locale, content }: HeroLandingProps) {
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
+      root.dataset.motion = "reduced";
       return;
     }
+    root.dataset.motion = "live";
 
     const pointer = { x: 0, y: 0 };
     const target = { tx: 0, ty: 0, px: 0, py: 0 };
@@ -231,7 +233,12 @@ export function HeroLanding({ locale, content }: HeroLandingProps) {
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
 
-    const stopShader = shader ? startShader(shader, pointer) : null;
+    let stopShader: (() => void) | null = null;
+    try {
+      stopShader = shader ? startShader(shader, pointer) : null;
+    } catch {
+      stopShader = null;
+    }
 
     const ctx = surface.getContext("2d");
     if (!ctx) {
